@@ -1,0 +1,33 @@
+{% extends 'main/land.html' %}
+
+{% block title %}PDF Helper | FILE Upload{% endblock %}
+
+
+{% if user.isauthenticated %}
+    {% block content %}
+        <h1>PDF | Helper</h1>
+        <form method="post" enctype="multipart/form-data"> 
+            {% csrf_token %}
+            <input type="file" name="pdf_file">
+            <button type="submit">Submit</button>
+        </form>
+
+        {% if user_pdfs.pdf_file %}
+            <h2> PDF on File </h2>
+            <a href="{{ user_pdfs.pdf_file.url }}" target="_blank">{{ user_pdfs.pdf_file.name }}</a>
+        {% else %}
+            <p>No PDF file uploaded yet</p>
+        {% endif %}
+
+        <style>
+            h1, label {
+                color: white;
+            }
+        </style>
+
+        {% endblock %}
+
+{% else %}
+    <p>Please log in to use PDF | Helper</p>
+{% endif %}
+

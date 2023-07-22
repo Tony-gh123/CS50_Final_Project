@@ -1,0 +1,31 @@
+{% extends 'main/land.html' %}
+
+{% block title %}PDF Helper | Login{% endblock %}
+
+{% block content %}
+    <h1>Welcome!</h1>
+    <form action="/login/" method="POST">
+
+        {% csrf_token %}
+        <label form="">Username</label>
+        <input type="text" id="username" name="username" placeholder="username" Required>
+        <br>
+
+        <label form="">Password</label>
+        <input type="password" id="password" name="password" placeholder="Password" Required>
+        <br>
+
+        <button class="btn btn-primary" type="submit">Login</button>
+    </form>
+
+    <div class="container">
+        <a class="btn btn-primary" href="/signup">Create New Account</a>
+    </div>
+
+    <style>
+        h1, label {
+            color: white;
+        }
+    </style>
+    
+{% endblock %}
