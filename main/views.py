@@ -60,36 +60,31 @@ def signup(request):
     return render(request, 'main/signup.html', {'form':form,})
 
 @login_required
-def pdf_upload(request):
+def pdf_upload_display(request):
     
     try:
         if request.method == 'POST':
             #get pdf file from user_profile.html
             pdf_file = request.FILES.get('pdf_file')
-            user_upload = UserUploads.objects.get(user=request.user)
-            user_upload.pdf_file = pdf_file
-            user_upload.save()
-            return redirect('pdf_display')
 
-        return render(request, 'main/user_profile.html')
+            #Create a new UserUploads instance for the current user and upload file
+            user_upload = UserUploads(user=request.user, pdf_file=pdf_file)
+            user_upload.save()
+
+            redirect(reverse('pdf_upload_display'))
+
+            #Get all UserUpload instances for the current user
+        user_pdfs = UserUploads.objects.filter(user=request.user)
+        return render(request, 'main/user_profile.html', {user_pdfs: user_pdfs})
+
     except UserUploads.DoesNotExist as e:
         logging.error(f"UserUploads.DoesNotExist: {e}")
         return render(request, 'main/home.html', {'error_message': "Error Occurred"})
     
 
 @login_required
-def pdf_display(request):
-
-    try:
-        user_pdfs = UserUploads.objects.get(user=request.user)
-        print(user_pdfs)
-    except UserUploads.DoesNotExist:
-        print("Error")
-    return render(request, 'main/user_profile.html', {'user_pdfs': user_pdfs})
-
-
-@login_required
 def pdf_delete(request):
 
     if request.method == 'POST':
-        print("DELETE!!!")
+        user_pdfs = UserUploads.objects.filter(user=request.user)
+        return render(request, 'user_profile.html', {'user_pdfs': user_pdfs})
