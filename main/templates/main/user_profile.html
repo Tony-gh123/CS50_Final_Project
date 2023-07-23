@@ -5,7 +5,7 @@
 
 {% if user.isauthenticated %}
     {% block content %}
-        <h1>PDF | Helper</h1>
+        <h1>PDF | Upload</h1>
         <form method="post" enctype="multipart/form-data"> 
             {% csrf_token %}
             <input type="file" name="pdf_file">
@@ -19,6 +19,21 @@
             <p>No PDF file uploaded yet</p>
         {% endif %}
 
+        <!--
+        {% if user_pdfs.pdf_file %}
+            <form method="post" action="% url 'delete_pdf' %">
+                {% % csrf_token}
+                <label for="dropdown">Choose a file</label>
+                <select id="dropdown" name="pdf_id">
+                    {% for pdf in user_pdfs %}
+                        <option value="{{ pdf.id }}">{{ pdf.pdf_file.name }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Delete FILE</button>
+            </form>
+        {% endif %}
+        -->
+        
         <style>
             h1, label {
                 color: white;

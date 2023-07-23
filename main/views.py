@@ -36,6 +36,7 @@ def login_user(request):
         return render(request, 'main/login.html', {})
 
 def signup(request):
+
     if request.user.is_authenticated:
         return redirect('home')
 
@@ -63,6 +64,7 @@ def pdf_upload(request):
     
     try:
         if request.method == 'POST':
+            #get pdf file from user_profile.html
             pdf_file = request.FILES.get('pdf_file')
             user_upload = UserUploads.objects.get(user=request.user)
             user_upload.pdf_file = pdf_file
@@ -86,3 +88,8 @@ def pdf_display(request):
     return render(request, 'main/user_profile.html', {'user_pdfs': user_pdfs})
 
 
+@login_required
+def pdf_delete(request):
+
+    if request.method == 'POST':
+        print("DELETE!!!")
