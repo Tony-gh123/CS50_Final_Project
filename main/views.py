@@ -3,8 +3,12 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+from django.db.models.signals import pre_delete
+from django.dispatch import receiver
+from django.db import models
 from .models import UserUploads
 import logging
+import os
 
 
 # Create your views here.
@@ -86,4 +90,16 @@ def pdf_registry(request): # Upload, Display and Delete pdf files!
         return render(request, 'main/home.html', {'error_message': "Error Occurred"})
     
     return render(request, 'main/user_profile.html')
-    
+
+
+## FIX BUGS HAHAHAHA IS UPLOADING A FILE EVERYTIME YOU REFRESH LOL!
+
+#Define a signal receiver to handle file deletion before the model is deleted
+@receiver(pre_delete, sender=UserUploads)
+def delete_vscode_file(sender, instance, **kwargs):
+    # Get path to the file in the media folder
+    file_path = instance.pdf_file.path
+
+    #Delete the file from the file system
+    if os.path.exists(file_path):
+        os.remove(file_path)
