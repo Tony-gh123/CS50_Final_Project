@@ -7,21 +7,19 @@
     {% block content %}
         <!-- Upload PDFs -->
         <h1>PDF | Upload</h1>
-        <form method="post" action="{% url 'pdf_upload_display' %}" enctype="multipart/form-data"> 
+        <form method="post" action="{% url 'pdf_registry' %}" enctype="multipart/form-data"> 
             {% csrf_token %}
             <input type="file" name="pdf_file">
             <button type="submit">Submit</button>
         </form>
 
-        <!-- Display uploaded PDFs -->
+        <!-- Display uploaded PDFs  -->
         <h2> PDFs on File: </h2>
         {% for user_pdf in user_pdfs %}
             <li><a href="{{ user_pdf.pdf_file.url }}">{{user_pdf.pdf_file.name}}</a></li>
         {% empty %}
             <p>No PDF file uploaded yet</p>
         {% endfor %}
-
-        <!--Temporary goes here-->
         
         <style>
             h1, label {

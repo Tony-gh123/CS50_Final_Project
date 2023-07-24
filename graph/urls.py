@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
-from main.views import index, signup, login_user, logout_user, home, pdf_upload_display
+from main.views import index, signup, login_user, logout_user, home, pdf_registry
 
 app_name = 'graph'
 
@@ -13,13 +13,17 @@ urlpatterns = [
     path('login/', login_user, name="login"),
     path('logout/', logout_user, name="logout"),
     path('home/', home, name="home"),
-    path('user_profile/', pdf_upload_display, name='pdf_upload_display'),
+    path('user_profile/', pdf_registry, name='pdf_registry'),
     path('admin/', admin.site.urls),
 ]
 
 #Configure Django to serve media files
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+
+
 
 
 
