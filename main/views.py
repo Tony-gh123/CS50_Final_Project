@@ -7,6 +7,8 @@ from django.db.models.signals import pre_delete
 from django.dispatch import receiver
 from django.db import models
 from .models import UserUploads
+from django.http import HttpResponse
+from pdfminer.high_level import extract_text
 import logging
 import os
 
@@ -95,8 +97,29 @@ def pdf_registry(request): # Upload, Display and Delete pdf files!
     
     return render(request, 'main/user_profile.html')
 
+@login_required
+def pdf_extract(request):
 
-## FIX BUGS HAHAHAHA IS UPLOADING A FILE EVERYTIME YOU REFRESH LOL!
+    try:
+        if request.method == 'POST':
+            
+            pdf_ids = request.POST.getlist('pdf_extract')
+
+            
+        
+        user_pdfs = UserUploads.objects.filter(user=request.user)
+        return render(request, 'main/extract.html', {'user_pdfs': user_pdfs})
+
+    except Exception as e:
+        return render(request, 'main/home.html', {'error_message': "Error Occurred" + str(e)})
+    
+    return render(request, 'main/extract.html')
+
+
+
+
+
+
 
 #Define a signal receiver to handle file deletion before the model is deleted
 @receiver(pre_delete, sender=UserUploads)
