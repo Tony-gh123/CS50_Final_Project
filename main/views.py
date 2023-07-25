@@ -79,9 +79,13 @@ def pdf_registry(request): # Upload, Display and Delete pdf files!
                 user_upload = UserUploads(user=request.user, pdf_file=pdf_file)
                 user_upload.save()
 
+                return redirect('pdf_registry')
+
             elif 'pdf_delete' in request.POST:
                 pdf_delete_ids = request.POST.getlist('pdf_delete')
                 UserUploads.objects.filter(id__in=pdf_delete_ids, user=request.user).delete()
+
+                return redirect('pdf_registry')
 
         return render(request, 'main/user_profile.html', {'user_pdfs': user_pdfs})
 
