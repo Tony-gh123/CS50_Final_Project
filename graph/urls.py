@@ -23,9 +23,10 @@ urlpatterns = [
     path('user_profile/', pdf_registry, name='pdf_registry'),
     # user communication
     path('admin_chat/', admin_chat, name='admin_chat'),
+    path('admin_chat/<int:recipient_id>/', admin_chat, name='admin_chat_user'),
     path('chat/', chat, name='chat'),
     path('send/<int:recipient_id>/', send, name='send'),
-    path('conversation/<int:recipient_id', conversation, name='conversation' ),
+    path('conversation/<int:recipient_id>/', conversation, name='conversation' ),
 ]
 
 #Configure Django to serve media files
