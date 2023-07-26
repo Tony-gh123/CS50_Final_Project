@@ -3,50 +3,41 @@
 {% block title %}PDF Helper | Chat{% endblock %}
 
 {% block content %}
-    {% if conversation %}
-        <!-- Chat -->
-        <h1>Chat</h1>
+<h1>Chat</h1>
+
+<div class="row">
+    <!-- Admin user list-->
+    <div class="col-md-4">
+        <h2>Admin</h2>
         <ul>
-            {% for recipient, messages in conversation.items %}
-                <li>
-                    <a href="{% url 'conversation' recipient.id}">
-                        {{ recipient.username }}
-                    </a>
-                    {% if messages %}
-                        - Last message: {{ messages.last.content }} ({{ messages.last.timestamp}})
-                    {% else %}
-                        - No Messages
-                    {% endif %}
-                </li>
+            {% for admin in admins %}
+            <li>
+                <a href="{% url 'chat' %}?recipient_id={{ admin.id }}">
+                    {{ admin.username }}
+                </a>
+            </li>
             {% endfor %}
         </ul>
-    {% else %}
-        <p>No conversations</p>
-    {% endif %}
+    </div>
 
-    {% if view == 'send' %}
-    <!-- Send Messages -->
-        
-        <h1>Send Message</h1>
-        <form method="post">
-            {% csrf_token %}
-            <textarea name="content" placeholder="Type Here"></textarea>
-            <button type="submit">Send</button>
-        </form>
-    {% endif %}
+    <div class="col-md-8">
+        <h2>Chat</h2>
+        {% if recipient %}
+            <h3>Conversation with {{ recipient.username }}</h3>
+            {% for message in messages %}
+                <p>{{ message.content }} - {{ message.timestamp }}</p>
+            {% endfor %}
 
-    {% if view == 'conversation' %}
-    <!-- Conversation log -->
-        <h1>Conversation</h1>
-        {% if messages %}
-            <ul>
-                {% for message in messages %}
-                    <li>{{ message.content }} - {{ message.timestamp }}</li>
-                {% endfor %}
-            </ul>
+            <!-- Form to send messages -->
+            <form method="post" action="{% url 'send' recipient.id %}">
+                {% csrf_token %}
+                <textarea name="content" placeholder="Type Here"></textarea>
+                <button type="submit">Send</button>
+            </form>
+
         {% else %}
-            <p>No messages yet</p>
+            <p>Select an admin to start a conversation</p>
         {% endif %}
-    {% endif %}
-
+    </div>
+</div>
 {% endblock %}

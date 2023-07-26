@@ -10,6 +10,7 @@ from django.db import models
 from main.models import UserUploads, Chat
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
+from django.db.models import Q
 import logging
 import os
 
@@ -39,8 +40,21 @@ def admin_chat(request):
 @login_required
 def chat(request):
 
-    conversation = Chat.objects.filter(sender=request.user) | Chat.objects.filter(recipient=request.user)
-    return render(request, 'main/chat.html', {'view': 'chat', 'conversation': conversation})
+    admins = User.objects.filter(is_superuser=True)
+    
+    recipient_id = request.GET.get('recipient_id')
+
+    if recipient_id:
+        recipient = get_object_or_404(User, pk=recipient_id)
+        messages = Chat.objects.filter(
+        (models.Q(sender=request.user) & models.Q(recipient=recipient)) |
+        (models.Q(recipient=request.user) & models.Q(sender=recipient))
+    ).order_by('timestamp')
+    else:
+        recipient = None
+        messages = []
+
+    return render(request, 'main/chat.html', {'admins': admins, 'recipient': recipient, 'messages': messages})
 
 @login_required
 def send(request, recipient_id):
@@ -51,7 +65,11 @@ def send(request, recipient_id):
         content = request.POST.get('content')
         message = Chat.objects.create(sender=request.user, recipient=recipient, content=content)
 
-    url = reverse('admin_chat') + f'?recipient_id={recipient_id}'
+    if request.user.is_superuser:
+        url = reverse('admin_chat') + f'?recipient_id={recipient_id}'
+    else:
+        url = reverse('chat') + f'?recipient_id={recipient_id}'
+
     return HttpResponseRedirect(url)
 
 
