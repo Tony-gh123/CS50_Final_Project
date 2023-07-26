@@ -13,14 +13,14 @@
             {% for user in users %}
             <li>
                 <a href="{% url 'conversation' user.id %}">
-                    {{ user.usernme }}
+                    {{ user.username }}
                 </a>
             </li>
             {% endfor %}
         </ul>
     </div>
 
-    <div class="col-md-8"
+    <div class="col-md-8">
         <h2>Chat</h2>
     </div>
 </div>

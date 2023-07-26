@@ -3,10 +3,10 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
-from main.views import index, home
-from main.views import signup, login_user, logout_user
-from main.views import pdf_registry
-from main.views import admin_chat, chat, send, conversation
+from main.views.log import index, home
+from main.views.log import signup, login_user, logout_user
+from main.views.log import pdf_registry
+from main.views.chat import admin_chat, chat, send, conversation
 
 app_name = 'graph'
 
