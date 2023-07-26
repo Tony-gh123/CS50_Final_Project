@@ -97,29 +97,6 @@ def pdf_registry(request): # Upload, Display and Delete pdf files!
     
     return render(request, 'main/user_profile.html')
 
-@login_required
-def pdf_extract(request):
-
-    try:
-        if request.method == 'POST':
-            
-            pdf_ids = request.POST.getlist('pdf_extract')
-
-            
-        
-        user_pdfs = UserUploads.objects.filter(user=request.user)
-        return render(request, 'main/extract.html', {'user_pdfs': user_pdfs})
-
-    except Exception as e:
-        return render(request, 'main/home.html', {'error_message': "Error Occurred" + str(e)})
-    
-    return render(request, 'main/extract.html')
-
-
-
-
-
-
 
 #Define a signal receiver to handle file deletion before the model is deleted
 @receiver(pre_delete, sender=UserUploads)
@@ -130,3 +107,33 @@ def delete_vscode_file(sender, instance, **kwargs):
     #Delete the file from the file system
     if os.path.exists(file_path):
         os.remove(file_path)
+
+
+"""
+Unapplied pdf extract feature - changed project idea
+
+urls.py
+path('extract/', pdf_extract, name='pdf_extract')
+
+land.html (nav-bar)
+<li class="nav-item">
+    <a class="nav-link" href="/extract">PDF EXtract</a>
+</li>
+
+views.py
+@login_required
+def pdf_extract(request):
+
+    try:
+        if request.method == 'POST':
+            
+            pdf_ids = request.POST.getlist('pdf_extract')
+        
+        user_pdfs = UserUploads.objects.filter(user=request.user)
+        return render(request, 'main/extract.html', {'user_pdfs': user_pdfs})
+
+    except Exception as e:
+        return render(request, 'main/home.html', {'error_message': "Error Occurred" + str(e)})
+    
+    return render(request, 'main/extract.html')
+"""

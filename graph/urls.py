@@ -4,7 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 from main.views import index, signup, login_user, logout_user, home
-from main.views import pdf_registry, pdf_extract
+from main.views import pdf_registry
 
 app_name = 'graph'
 
@@ -16,7 +16,6 @@ urlpatterns = [
     path('home/', home, name="home"),
     path('user_profile/', pdf_registry, name='pdf_registry'),
     path('admin/', admin.site.urls),
-    path('extract/', pdf_extract, name='pdf_extract')
 ]
 
 #Configure Django to serve media files
