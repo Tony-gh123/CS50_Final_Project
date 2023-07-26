@@ -3,19 +3,29 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
-from main.views import index, signup, login_user, logout_user, home
+from main.views import index, home
+from main.views import signup, login_user, logout_user
 from main.views import pdf_registry
+from main.views import admin_chat, chat, send, conversation
 
 app_name = 'graph'
 
 urlpatterns = [
+    # landing page & admin
+    path('admin/', admin.site.urls),
+    path('home/', home, name="home"),
     path('', index, name='land'),
+    # authentication and login
     path('signup/', signup, name="signup"),
     path('login/', login_user, name="login"),
     path('logout/', logout_user, name="logout"),
-    path('home/', home, name="home"),
+    # file uploads
     path('user_profile/', pdf_registry, name='pdf_registry'),
-    path('admin/', admin.site.urls),
+    # user communication
+    path('admin_chat/', admin_chat, name='admin_chat'),
+    path('chat/', chat, name='chat'),
+    path('send/<int:recipient_id>/', send, name='send'),
+    path('conversation/<int:recipient_id', conversation, name='conversation' ),
 ]
 
 #Configure Django to serve media files

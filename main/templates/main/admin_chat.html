@@ -1,0 +1,27 @@
+{% extends 'main/land.html' %}
+
+{% block title %}PDF Helper | Admin chat{% endblock %}
+
+{% block content %}
+<h1>Admin Chat</h1>
+
+<div class="row">
+    <!-- Web user list-->
+    <div class="col-md-4">
+        <h2>Customers</h2>
+        <ul>
+            {% for user in users %}
+            <li>
+                <a href="{% url 'conversation' user.id %}">
+                    {{ user.usernme }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="col-md-8"
+        <h2>Chat</h2>
+    </div>
+</div>
+{% endblock %}
