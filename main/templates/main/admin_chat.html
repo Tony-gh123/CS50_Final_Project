@@ -20,6 +20,7 @@
         </ul>
     </div>
 
+    <!-- view chat -->
     <div class="col-md-8">
         <h2>Chat</h2>
         {% if recipient %}
@@ -29,8 +30,12 @@
                 <div>
                     <p> {{ message.content }}</p>
                     <p> {% if message.file %}</p>
-                        <a href="{{ message.file.url }}"> Download attachment file </a>
-                        {% endif %}
+                    <form method="post" action="{% url 'add_file' message.id %}">
+                        {% csrf_token %}
+                        <a href="{{ message.file.url }}"> {{ message.file }} </a>
+                        <button type="submit">Add File</button>
+                    </form>
+                    {% endif %}
                 </div>
             {% endfor %}
 

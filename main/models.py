@@ -17,6 +17,8 @@ class Chat(models.Model):
     content = models.TextField()
     file = models.FileField(upload_to='chat_files/%Y/%m/%d/', blank=True, null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
+    is_deleted = models.BooleanField(default=False)
+    deleted_at= models.DateTimeField(null=True, blank=True)
 
 
 

@@ -6,7 +6,7 @@ from django.urls import path
 from main.views.log import index, home
 from main.views.log import signup, login_user, logout_user
 from main.views.log import pdf_registry
-from main.views.chat import admin_chat, chat, send, conversation
+from main.views.chat import admin_chat, chat, send, chat_delete, add_file
 
 app_name = 'graph'
 
@@ -26,7 +26,8 @@ urlpatterns = [
     path('admin_chat/<int:recipient_id>/', admin_chat, name='admin_chat_user'),
     path('chat/', chat, name='chat'),
     path('send/<int:recipient_id>/', send, name='send'),
-    path('conversation/<int:recipient_id>/', conversation, name='conversation' ),
+    path('chat_delete/<int:recipient_id>/', chat_delete, name='chat_delete' ),
+    path('add_file/<int:message_id>', add_file, name="add_file"),
 ]
 
 #Configure Django to serve media files

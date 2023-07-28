@@ -20,19 +20,32 @@
         </ul>
     </div>
 
+    <!-- view chat -->
     <div class="col-md-8">
         <h2>Chat</h2>
         {% if recipient %}
             <h3>Conversation with {{ recipient.username }}</h3>
             {% for message in messages %}
+            
                 <p>{{ message.content }} - {{ message.timestamp }}</p>
                 <div>
                     <p> {{ message.content }}</p>
                     <p> {% if message.file %}</p>
-                        <a href="{{ message.file.url }}"> Download attachment file </a>
+                        <form method="post" action="{% url 'add_file' message.id %}">
+                            {% csrf_token %}
+                            <a href="{{ message.file.url }}"> {{ message.file}} </a>
+                            <button type="submit">Add File</button>
+                        </form>
                         {% endif %}
                 </div>
             {% endfor %}
+            <div>
+                <form method="post" action="{% url 'chat_delete' recipient.id %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="chat_delete" value="1">
+                    <button type="submit">Delete Chat</button>
+                </form>
+            </div>
 
             <!-- Form to send messages -->
             <form method="post" action="{% url 'send' recipient.id %}" enctype="multipart/form-data">
