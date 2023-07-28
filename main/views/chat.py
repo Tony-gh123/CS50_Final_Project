@@ -63,7 +63,8 @@ def send(request, recipient_id):
 
     if request.method == 'POST':
         content = request.POST.get('content')
-        message = Chat.objects.create(sender=request.user, recipient=recipient, content=content)
+        file = request.FILES.get('file')
+        message = Chat.objects.create(sender=request.user, recipient=recipient, content=content, file=file)
 
     if request.user.is_superuser:
         url = reverse('admin_chat') + f'?recipient_id={recipient_id}'

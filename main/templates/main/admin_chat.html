@@ -26,12 +26,19 @@
             <h3>Conversation with {{ recipient.username }}</h3>
             {% for message in messages %}
                 <p>{{ message.content }} - {{ message.timestamp }}</p>
+                <div>
+                    <p> {{ message.content }}</p>
+                    <p> {% if message.file %}</p>
+                        <a href="{{ message.file.url }}"> Download attachment file </a>
+                        {% endif %}
+                </div>
             {% endfor %}
 
             <!-- Form to send messages -->
-            <form method="post" action="{% url 'send' recipient.id %}">
+            <form method="post" action="{% url 'send' recipient.id %}" enctype="multipart/form-data">
                 {% csrf_token %}
                 <textarea name="content" placeholder="Type Here"></textarea>
+                <input type="file" name="file">
                 <button type="submit">Send</button>
             </form>
 
