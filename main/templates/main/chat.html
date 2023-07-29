@@ -31,7 +31,7 @@
                     <p> {% if message.file %}</p>
                         <form method="post" action="{% url 'add_file' message.id %}">
                             {% csrf_token %}
-                            <a href="{{ message.file.url }}"> {{ message.file}} </a>
+                            <a href="{{ message.file.url }}"> {{ message.file }}</a>
                             <button type="submit">Add File</button>
                         </form>
                         {% endif %}
