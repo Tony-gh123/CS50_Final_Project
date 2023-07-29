@@ -26,10 +26,8 @@
         {% if recipient %}
             <h3>Conversation with {{ recipient.username }}</h3>
             {% for message in messages %}
-            
-                <p>{{ message.content }} - {{ message.timestamp }}</p>
                 <div>
-                    <p> {{ message.content }}</p>
+                    <p> {{ message.content }} - {{ message.timestamp }} </p>
                     <p> {% if message.file %}</p>
                         <form method="post" action="{% url 'add_file' message.id %}">
                             {% csrf_token %}

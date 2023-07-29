@@ -23,13 +23,12 @@ def admin_chat(request):
         return redirect('main/home.html')
 
     users = User.objects.exclude(pk=request.user.pk)
-    
     recipient_id = request.GET.get('recipient_id')
 
     if recipient_id:
         recipient = get_object_or_404(User, pk=recipient_id)
-        if 'chat_delete' in request.POST:
-                chat_delete(request, recipient)
+        if request.method == 'POST' and 'chat_delete' in request.POST:
+            return chat_delete(request, recipient)
         messages = fetch_chat(request, recipient)
     else:
         recipient = None
@@ -41,13 +40,12 @@ def admin_chat(request):
 def chat(request):
 
     admins = User.objects.filter(is_superuser=True)
-    
     recipient_id = request.GET.get('recipient_id')
 
     if recipient_id:
         recipient = get_object_or_404(User, pk=recipient_id)
-        if 'chat_delete' in request.POST:
-                chat_delete(request, recipient)
+        if request.method == 'POST' and 'chat_delete' in request.POST:
+            chat_delete(request, recipient)
         messages = fetch_chat(request, recipient)
     else:
         recipient = None
@@ -69,11 +67,18 @@ def chat_delete(request, recipient_id):
 
     recipient = get_object_or_404(User, pk=recipient_id)
 
-    return Chat.objects.filter(
+    Chat.objects.filter(
         (models.Q(sender=request.user) & models.Q(recipient=recipient)) |
         (models.Q(recipient=request.user) & models.Q(sender=recipient)), 
         is_deleted=False
     ).update(is_deleted=True, deleted_at=timezone.now())
+
+    if request.user.is_superuser:
+        url = reverse('admin_chat') + f'?recipient_id={recipient_id}'
+    else:
+        url = reverse('chat') + f'?recipient_id={recipient_id}'
+
+    return HttpResponseRedirect(url)
 
 @login_required
 def send(request, recipient_id):
@@ -104,10 +109,13 @@ def add_file(request, message_id):
             download_file = UserUploads(user=request.user, pdf_file=message.file)
             download_file.save()
 
-    if request.user == message.sender:
-        url = reverse('conversation', args=[message.recipient.id])
+    # Determine the recipient based on the sender
+    recipient_id = message.recipient.id if request.user == message.sender else message.sender.id
+
+    if request.user.is_superuser:
+        url = reverse('admin_chat') + f'?recipient_id={recipient_id}'
     else:
-        url = reverse('conversation', args=[message.sender.id])
+        url = reverse('chat') + f'?recipient_id={recipient_id}'
 
     return HttpResponseRedirect(url)
 

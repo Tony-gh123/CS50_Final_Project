@@ -26,9 +26,8 @@
         {% if recipient %}
             <h3>Conversation with {{ recipient.username }}</h3>
             {% for message in messages %}
-                <p>{{ message.content }} - {{ message.timestamp }}</p>
                 <div>
-                    <p> {{ message.content }}</p>
+                    <p> {{ message.content }} - {{ message.timestamp }} </p>
                     <p> {% if message.file %}</p>
                     <form method="post" action="{% url 'add_file' message.id %}">
                         {% csrf_token %}
@@ -38,6 +37,13 @@
                     {% endif %}
                 </div>
             {% endfor %}
+            <div>
+                <form method="post" action="{% url 'chat_delete' recipient.id %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="chat_delete" value="1">
+                    <button type="submit">Delete Chat</button>
+                </form>
+            </div>
 
             <!-- Form to send messages -->
             <form method="post" action="{% url 'send' recipient.id %}" enctype="multipart/form-data">
