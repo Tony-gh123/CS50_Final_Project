@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models.signals import pre_delete
 from django.dispatch import receiver
 from django.db import models
+from main.views.file_upload import pdf_registry
 from main.models import UserUploads, Chat
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse

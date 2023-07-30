@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 from django.urls import path
 from main.views.log import index, home
 from main.views.log import signup, login_user, logout_user
-from main.views.log import pdf_registry
+from main.views.file_upload import pdf_registry
 from main.views.chat import admin_chat, chat, send, chat_delete, add_file
 
 app_name = 'graph'
