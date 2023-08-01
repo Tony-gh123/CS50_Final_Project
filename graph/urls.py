@@ -6,7 +6,7 @@ from main.views.log import index, home
 from main.views.log import signup, login_user, logout_user
 from main.views.file_upload import pdf_registry
 from main.views.chat import admin_chat, chat, send, chat_delete, add_file
-from main.views.appointments import calendar, admin_calendar
+from main.views.appointments import calendar
 
 app_name = 'graph'
 
@@ -30,7 +30,6 @@ urlpatterns = [
     path('add_file/<int:message_id>', add_file, name="add_file"),
     # calendar & appointments
     path('calendar/', calendar, name='calendar'),
-    path('admin_calendar/', admin_calendar, name='calendar'),
 ]
 
 #Configure Django to serve media files

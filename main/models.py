@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django import forms
 
 # Create your models here.
 
@@ -35,3 +36,8 @@ class Appointment(models.Model):
     reason = models.TextField(blank=True)
     comments = models.TextField(blank=True)
     duration = models.DurationField()
+
+class AppointmentForm(forms.ModelForm):
+    class Meta:
+        model = Appointment
+        fields = ['admin', 'date', 'time', 'reason', 'comments', 'duration']

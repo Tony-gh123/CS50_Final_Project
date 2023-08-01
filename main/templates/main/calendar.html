@@ -3,63 +3,56 @@
 {% block title %}PDF Helper | Login{% endblock %}
 
 {% block content %}
+<!-- Book Appointment -->
     <p> My Appointments </p>
     <div class="container">
         <div class="calendar">
 
-            <!-- Front of calendar (select date) -->
-            <div class="front">
-                <div class="current-date">
-                    <h1>{{ today|date:"l dS" }}</h1>
-                    <h1>{{ today|date:"F Y" }}</h1>
+            <!-- view current appointments -->
+            <div class="appointments">
+                {% if appointment in appointments %}
+                <div class="list">
+                    appointment 1
+                    appointme 2
                 </div>
+            </div>
+            <button class="cancel" type="submit">
+                Cancel <i class="cancel"></i>
+            </button>
 
-                <div class="current-month">
-                    <div class="weeks">
-                        <!-- Iterate over date_list and show each day -->
-                        {% for day in date_list %}
-                            <div class="{{ day|date:"D" | lower}}">
-                                <!-- check if day has an event-->
-                                {% if day in event_dates %}
-                                    <span class="event">{{ day.day }}</span>
-                                {% else %}
-                                    <span>{{ day.day }}</span>
-                                {% endif %}
-                            </div>
-                        {% endfor %}
+            <!-- schedule a new appointment -->
+            <div class="back">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="reason">
+                        <input type="text" name="reason" placeholder="Reason for appointment">
+                    </div>
+                    <div class="info">
+                        <div class="date">
+                            <p class="info-date">
+                                <label for="date">Date:</label>
+                                <input type="date" id="date" name="date">
+                            </p>
+                            <p class="info-time">
+                                <label for="time">Time:</label>
+                                <input type="time" id="time" name="time">
+                            </p>
+                        </div>
+                        <div class="comments">
+                            <p>
+                                <label for="comments" placeholder="Example: Meet me inside">Comments:</label>
+                                <input type="text" id="comments" name="comments">
+                            </p>
                         </div>
                     </div>
-            
-            <!-- Back of calendar (date selected) -->
-            <div class="back">
-                <input placeholder="What's the event">
-                <div class="info">
-                    <div class="date">
-                        <p class="info-date">
-                            Date: {{ Date selected }}
-                        </p>
-                        <p class="info-time">
-                            Time: {{ Time selected }}
-                        </p>
-                    </div>
-                    <div class="address">
-                        <p>
-                            Address: {{ Type address }}
-                        </p>
-                    </div>
-                    <div class="comments">
-                        <p> 
-                            Comments: {{ Type Comment}}
-                        </p>
-                    </div>
-                </div>
+                </form>
 
                 <!-- Confirm or dismiss schedule -->
                 <div class="actions">
-                    <button class="save">
+                    <button class="save" type="submit">
                         Save <i class="save"></i>
                     </button>
-                    <button class="dismiss">
+                    <button class="dismiss" type="submit">
                         Dismiss <i class="close"></i>
                     </button>
                 </div>
