@@ -15,15 +15,55 @@
                 </div>
 
                 <div class="current-month">
-                    <ul class="week-days">
-                        <li>Mon</li>
-                        <li>Tue</li>
-                        <li>Wed</li>
-                        <li>Thu</li>
-                        <li>Fri</li>
-                        <li>Sun</li>
-                    </ul>
-
                     <div class="weeks">
-                        
+                        <!-- Iterate over date_list and show each day -->
+                        {% for day in date_list %}
+                            <div class="{{ day|date:"D" | lower}}">
+                                <!-- check if day has an event-->
+                                {% if day in event_dates %}
+                                    <span class="event">{{ day.day }}</span>
+                                {% else %}
+                                    <span>{{ day.day }}</span>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                        </div>
+                    </div>
+            
+            <!-- Back of calendar (date selected) -->
+            <div class="back">
+                <input placeholder="What's the event">
+                <div class="info">
+                    <div class="date">
+                        <p class="info-date">
+                            Date: {{ Date selected }}
+                        </p>
+                        <p class="info-time">
+                            Time: {{ Time selected }}
+                        </p>
+                    </div>
+                    <div class="address">
+                        <p>
+                            Address: {{ Type address }}
+                        </p>
+                    </div>
+                    <div class="comments">
+                        <p> 
+                            Comments: {{ Type Comment}}
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Confirm or dismiss schedule -->
+                <div class="actions">
+                    <button class="save">
+                        Save <i class="save"></i>
+                    </button>
+                    <button class="dismiss">
+                        Dismiss <i class="close"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -21,4 +21,17 @@ class Chat(models.Model):
     deleted_at= models.DateTimeField(null=True, blank=True)
 
 
-
+class Appointment(models.Model):
+    STATUS_CHOICES = (
+        ('scheduled', 'Scheduled'),
+        ('completed', 'Completed'),
+        ('cancelled', 'Cancelled'),
+    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_appointments')
+    admin = models.ForeignKey(User, on_delete=models.CASCADE, related_name='admin_appointments')
+    date = models.DateField()
+    time = models.TimeField()
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='scheduled')
+    reason = models.TextField(blank=True)
+    comments = models.TextField(blank=True)
+    duration = models.DurationField()
