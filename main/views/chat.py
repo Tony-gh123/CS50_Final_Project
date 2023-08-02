@@ -20,7 +20,7 @@ import os
 @login_required
 def admin_chat(request):
 
-    if not request.user.is_superuser:
+    if not request.user.is_staff:
         return redirect('main/home.html')
 
     users = User.objects.exclude(pk=request.user.pk)
@@ -40,7 +40,7 @@ def admin_chat(request):
 @login_required
 def chat(request):
 
-    admins = User.objects.filter(is_superuser=True)
+    admins = User.objects.filter(is_staff=True)
     recipient_id = request.GET.get('recipient_id')
 
     if recipient_id:
@@ -74,7 +74,7 @@ def chat_delete(request, recipient_id):
         is_deleted=False
     ).update(is_deleted=True, deleted_at=timezone.now())
 
-    if request.user.is_superuser:
+    if request.user.is_staff:
         url = reverse('admin_chat') + f'?recipient_id={recipient_id}'
     else:
         url = reverse('chat') + f'?recipient_id={recipient_id}'
@@ -91,7 +91,7 @@ def send(request, recipient_id):
         file = request.FILES.get('file')
         message = Chat.objects.create(sender=request.user, recipient=recipient, content=content, file=file)
 
-    if request.user.is_superuser:
+    if request.user.is_staff:
         url = reverse('admin_chat') + f'?recipient_id={recipient_id}'
     else:
         url = reverse('chat') + f'?recipient_id={recipient_id}'
@@ -113,7 +113,7 @@ def add_file(request, message_id):
     # Determine the recipient based on the sender
     recipient_id = message.recipient.id if request.user == message.sender else message.sender.id
 
-    if request.user.is_superuser:
+    if request.user.is_staff:
         url = reverse('admin_chat') + f'?recipient_id={recipient_id}'
     else:
         url = reverse('chat') + f'?recipient_id={recipient_id}'

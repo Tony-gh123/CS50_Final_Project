@@ -1,29 +1,73 @@
 {% extends 'main/land.html' %}
 
-{% block title %}PDF Helper | Login{% endblock %}
+{% block title %}PDF Helper | Appointments{% endblock %}
 
 {% block content %}
 <!-- Book Appointment -->
     <p> My Appointments </p>
     <div class="container">
         <div class="calendar">
-
+            {% if appointments %}
             <!-- view current appointments -->
             <div class="appointments">
-                {% if appointment in appointments %}
                 <div class="list">
-                    appointment 1
-                    appointme 2
+                    {% for appointment in appointments %}
+                    {% if appointment.status != 'cancelled' and appointment.status != 'completed' %}
+                    <div class="appointment">
+                        <p>Date: {{ appointment.date }}</p>
+                        <p>Time: {{ appointment.time }}</p>
+                        <p>Duration: {{ appointment.duration }}</p>
+                        <p>Reason: {{ appointment.reason }}</p>
+                        <p>Comments: {{ appointment.comments }}</p>
+
+                        <!-- Cancel Appointments -->
+                        {% if appointment.status == 'scheduled' or appointment.status == 'completed' %}
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="cancel">
+                            <input type="hidden" name="appointment_id" value="{{ appointment.id }}">
+                            <button type="submit">Cancel</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                    {% endfor %}
                 </div>
+
+                <!-- view past appointments -->
+                <div actions="actions">
+                    {% if request.user.is_staff %}
+                    <form method ="post" action="{% url 'previous_apts' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="previous_apts">
+                        <button class="btn btn-primary" type="submit">All Apts</button>
+                    </form>
+                    {% endif %}
+                </div>
+
+                <!-- No Appointments -->
+                {% else %}
+                <p>No appointments scheduled</p>
+                {% endif %}
             </div>
-            <button class="cancel" type="submit">
-                Cancel <i class="cancel"></i>
-            </button>
 
             <!-- schedule a new appointment -->
             <div class="back">
                 <form method="POST">
                     {% csrf_token %}
+
+                    <!-- admin list -->
+                    <div class="admin" action="">
+                        <label for="admin">Choose Admin:</label>
+                        <select id="admin" name="admin">
+                            <option value="">______</option>
+                            {% for admin in admins %}
+                                <option value="{{ admin.id }}">{{ admin.username }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- form fields -->
                     <div class="reason">
                         <input type="text" name="reason" placeholder="Reason for appointment">
                     </div>
@@ -38,24 +82,26 @@
                                 <input type="time" id="time" name="time">
                             </p>
                         </div>
+                        <div class="duration">
+                            <p>
+                                <label for="duration">Duration: (minutes):</label>
+                                <input type="number" id="duration" name="duration">
+                            </p>
+                        </div>
                         <div class="comments">
                             <p>
-                                <label for="comments" placeholder="Example: Meet me inside">Comments:</label>
-                                <input type="text" id="comments" name="comments">
+                                <label for="comments">Comments:</label>
+                                <input type="text" id="comments" name="comments" placeholder="Example: Meet me inside">
                             </p>
                         </div>
                     </div>
+                    
+                    <!-- Confirm or dismiss schedule -->
+                    <div class="actions">
+                        <button class="btn btn-primary" name="action" value="save" type="submit">Save</button>
+                        <button class="btn btn-primary" name="action" value="dismiss" type="submit">Dismiss</button>
+                    </div>
                 </form>
-
-                <!-- Confirm or dismiss schedule -->
-                <div class="actions">
-                    <button class="save" type="submit">
-                        Save <i class="save"></i>
-                    </button>
-                    <button class="dismiss" type="submit">
-                        Dismiss <i class="close"></i>
-                    </button>
-                </div>
             </div>
         </div>
     </div>

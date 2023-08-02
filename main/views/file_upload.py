@@ -8,9 +8,6 @@ from django.http import HttpResponse
 import logging
 import os
 
-
-
-
 @login_required
 def pdf_registry(request): # Upload, Display and Delete pdf files!
     
