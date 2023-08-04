@@ -14,6 +14,15 @@
                     {% for appointment in appointments %}
                     {% if appointment.status != 'cancelled' and appointment.status != 'completed' %}
                     <div class="appointment">
+                        <!-- Find Recipient -->
+                        <p>Recipient: 
+                        {% if user == appointment.admin %}
+                            {{ appointment.user.username }}
+                        {% else %} 
+                            {{ appointment.admin.username }} 
+                        {% endif %}
+                        </p>
+                        <!-- Rest of fields -->
                         <p>Date: {{ appointment.date }}</p>
                         <p>Time: {{ appointment.time }}</p>
                         <p>Duration: {{ appointment.duration }}</p>
@@ -21,14 +30,17 @@
                         <p>Comments: {{ appointment.comments }}</p>
 
                         <!-- Cancel Appointments -->
-                        {% if appointment.status == 'scheduled' or appointment.status == 'completed' %}
-                        <form method="post">
-                            {% csrf_token %}
-                            <input type="hidden" name="action" value="cancel">
-                            <input type="hidden" name="appointment_id" value="{{ appointment.id }}">
-                            <button type="submit">Cancel</button>
-                        </form>
-                        {% endif %}
+                        <div actions="actions"></div>
+                            {% if appointment.status == 'scheduled' or appointment.status == 'completed' %}
+                            <form method="post" action="{% url 'calendar' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="action" value="cancel">
+                                <input type="hidden" name="appointment_id" value="{{ appointment.id }}">
+                                <button type="submit">Cancel</button>
+                            </form>
+                            {% endif %}
+                        </div>
+
                     </div>
                     {% endif %}
                     {% endfor %}
@@ -56,18 +68,33 @@
                 <form method="POST">
                     {% csrf_token %}
 
-                    <!-- admin list -->
-                    <div class="admin" action="">
-                        <label for="admin">Choose Admin:</label>
-                        <select id="admin" name="admin">
+                    <!-- admin list (recipient) -->
+                    {% if not request.user.is_staff %}
+                    <div class="recipient">
+                        <label for="recipient">To:</label>
+                        <select id="recipient" name="recipient">
                             <option value="">______</option>
                             {% for admin in admins %}
                                 <option value="{{ admin.id }}">{{ admin.username }}</option>
                             {% endfor %}
                         </select>
                     </div>
+                    {% endif %}
 
-                    <!-- form fields -->
+                    <!-- user list (recipient)-->
+                    {% if request.user.is_staff %}
+                    <div class="recipient" action="">
+                        <label for="recipient">To:</label>
+                        <select id="recipient" name="recipient">
+                            <option value="">______</option>
+                            {% for user in users %}
+                                <option value="{{ user.id }}">{{ user.username }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>                        
+                    {% endif %}
+
+                    <!-- more form fields -->
                     <div class="reason">
                         <input type="text" name="reason" placeholder="Reason for appointment">
                     </div>

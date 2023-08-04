@@ -13,6 +13,8 @@
             <div class="list">
                 {% for appointment in appointments %}
                 <div class="appointment">
+                    <p>Status: {{ appointment.status }}</p>
+                    <p>User: {{ appointment.user.username }}</p>
                     <p>Date: {{ appointment.date }}</p>
                     <p>Time: {{ appointment.time }}</p>
                     <p>Duration: {{ appointment.duration }}</p>

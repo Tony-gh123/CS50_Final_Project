@@ -40,4 +40,4 @@ class Appointment(models.Model):
 class AppointmentForm(forms.ModelForm):
     class Meta:
         model = Appointment
-        fields = ['admin', 'date', 'time', 'reason', 'comments', 'duration']
+        fields = ['date', 'time', 'reason', 'comments', 'duration']

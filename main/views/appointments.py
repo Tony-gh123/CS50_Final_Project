@@ -9,8 +9,16 @@ from django.db.models import Q
 @login_required
 def calendar(request):
 
-    admins = User.objects.filter(is_staff=True)
-    appointments = Appointment.objects.filter(Q(user=request.user) | Q(admin=request.user))
+    # define users and admins.
+    users = None
+    admins = None
+
+    if request.user.is_staff:
+        user_appointments = Appointment.objects.filter(admin=request.user)
+        users = User.objects.filter(is_staff=False, is_superuser=False)
+    else:
+        user_appointments = Appointment.objects.filter(user=request.user)
+        admins = User.objects.filter(is_staff=True)
 
     form = AppointmentForm()
 
@@ -19,10 +27,16 @@ def calendar(request):
         if action == "save":
             form = AppointmentForm(request.POST)
             if form.is_valid():
-                    appointment = form.save(commit=False)
+                recipient_id = request.POST.get('recipient')
+                recipient = User.objects.get(pk=recipient_id)
+                appointment = form.save(commit=False)
+                if request.user.is_staff:
+                    appointment.admin = request.user
+                    apointment.user = recipient
+                else:
                     appointment.user = request.user
-                    appointment.save()
-                    return redirect('calendar')
+                    appointment.admin = recipient
+                appointment.save()
             else:
                 print("Invalid Form")
                 print("Form Errors:", form.errors)
@@ -32,24 +46,26 @@ def calendar(request):
         
         elif action == "cancel":
             appointment_id = request.POST.get('appointment_id')
-            appointment = get_object_or_404(Appointment, id=appointment_id, user=request.user)
+            appointment = get_object_or_404(Appointment, id=appointment_id)
             appointment.status = 'cancelled'
             appointment.save()
-    else:
-        form = AppointmentForm()
     
-    return render(request, 'main/calendar.html', {'form': form, 'appointments': appointments, 'admins': admins})
-
+    context = {
+        'form': form,
+        'appointments': user_appointments,
+        'users': users,
+        'admins': admins,
+    }
+    
+    return render(request, 'main/calendar.html', context)
 
 @login_required
 def previous_apts(request):
 
-    appointments = Appointment.objects.filter(Q(user=request.user) | Q(admin=request.user),
+    appointments = Appointment.objects.filter( Q(user=request.user) | Q(admin=request.user),
     status__in=['cancelled', 'completed'])
-
-    print(appointments)
 
     if request.method == "POST" and request.POST.get('action') == "previous_apts":
         return render(request, 'main/previous_apts.html', {'appointments': appointments})
 
-    return render(request, 'main/calendar.html', {'appointments': appointments})
+    return render(request, 'main/calendar.html', {'appointments': appointments, 'recipient': recipient})
