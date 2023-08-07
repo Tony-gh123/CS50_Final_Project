@@ -32,7 +32,7 @@ def calendar(request):
                 appointment = form.save(commit=False)
                 if request.user.is_staff:
                     appointment.admin = request.user
-                    apointment.user = recipient
+                    appointment.user = recipient
                 else:
                     appointment.user = request.user
                     appointment.admin = recipient
@@ -65,7 +65,17 @@ def previous_apts(request):
     appointments = Appointment.objects.filter( Q(user=request.user) | Q(admin=request.user),
     status__in=['cancelled', 'completed'])
 
-    if request.method == "POST" and request.POST.get('action') == "previous_apts":
-        return render(request, 'main/previous_apts.html', {'appointments': appointments})
+    if request.method == "POST":
+        if request.POST.get('action') == "previous_apts":
+            return render(request, 'main/previous_apts.html', {'appointments': appointments})
 
-    return render(request, 'main/calendar.html', {'appointments': appointments, 'recipient': recipient})
+        elif request.POST.get('action') == "restore":
+            appointment_id = request.POST.get('restore')
+            try:
+                appointment = Appointment.objects.get(id=appointment_id)
+                appointment.status = 'scheduled'
+                appointment.save()
+            except Appointment.DoesNotExist:
+                print("failed to reschedule")
+
+    return render(request, 'main/previous_apts.html', {'appointments': appointments})

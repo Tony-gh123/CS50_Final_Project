@@ -1,11 +1,15 @@
 {% extends 'main/land.html' %}
+{% load static %}
 
 {% block title %}PDF Helper | Appointments{% endblock %}
+{% block more_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'main/css/calendar.css' %}">
+{% endblock %}
 
 {% block content %}
 <!-- Book Appointment -->
-    <p> My Appointments </p>
     <div class="container">
+        <p class="title"> My Appointments </p>
         <div class="calendar">
             {% if appointments %}
             <!-- view current appointments -->
@@ -47,7 +51,7 @@
                 </div>
 
                 <!-- view past appointments -->
-                <div actions="actions">
+                <div actions="action">
                     {% if request.user.is_staff %}
                     <form method ="post" action="{% url 'previous_apts' %}">
                         {% csrf_token %}
