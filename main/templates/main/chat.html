@@ -1,6 +1,10 @@
 {% extends 'main/land.html' %}
+{% load static %}
 
 {% block title %}PDF Helper | Chat{% endblock %}
+{% block more_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'main/css/chat.css' %}">
+{% endblock %}
 
 {% block content %}
 <h1>Chat</h1>

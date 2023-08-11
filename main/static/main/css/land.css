@@ -5,9 +5,5 @@ html, body {
 }
 
 body {
-      background: linear-gradient(to bottom, #bcbccd, #74a974);
-      /* For older browsers */
-      background: -webkit-linear-gradient(top, #a9678d, #69ba69);
-      background: -moz-linear-gradient(top, #8a69bf, #547654);
-      background: -o-linear-gradient(top, #b76795, #679367);
+      background: linear-gradient(to bottom, #ffffff, #943838);
 }
