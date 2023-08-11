@@ -13,11 +13,11 @@
         <div class="calendar">
             {% if appointments %}
             <!-- view current appointments -->
-            <div class="appointments">
-                <div class="list">
+            <div class="view-appointments">
+                <div class="view-list">
                     {% for appointment in appointments %}
                     {% if appointment.status != 'cancelled' and appointment.status != 'completed' %}
-                    <div class="appointment">
+                    <div class="view-appointment">
                         <!-- Find Recipient -->
                         <p>Recipient: 
                         {% if user == appointment.admin %}
@@ -34,7 +34,7 @@
                         <p>Comments: {{ appointment.comments }}</p>
 
                         <!-- Cancel Appointments -->
-                        <div actions="actions"></div>
+                        <div class="view-cancel">
                             {% if appointment.status == 'scheduled' or appointment.status == 'completed' %}
                             <form method="post" action="{% url 'calendar' %}">
                                 {% csrf_token %}
@@ -43,38 +43,36 @@
                                 <button type="submit">Cancel</button>
                             </form>
                             {% endif %}
-                        </div>
-
                     </div>
                     {% endif %}
                     {% endfor %}
-                </div>
-
-                <!-- view past appointments -->
-                <div actions="action">
-                    {% if request.user.is_staff %}
-                    <form method ="post" action="{% url 'previous_apts' %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="action" value="previous_apts">
-                        <button class="btn btn-primary" type="submit">All Apts</button>
-                    </form>
-                    {% endif %}
-                </div>
-
+                </div> 
                 <!-- No Appointments -->
                 {% else %}
                 <p>No appointments scheduled</p>
                 {% endif %}
             </div>
 
+            <!-- view past appointments -->
+            <div class="past-appointments">
+                {% if request.user.is_staff %}
+                <form method ="post" action="{% url 'previous_apts' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="previous_apts">
+                    <button class="btn btn-primary" type="submit">All Apts</button>
+                </form>
+                {% endif %}
+            </div>
+
             <!-- schedule a new appointment -->
-            <div class="back">
+            <p class="title"> New Appointment </p>
+            <div class="new-appointment">
                 <form method="POST">
                     {% csrf_token %}
 
                     <!-- admin list (recipient) -->
                     {% if not request.user.is_staff %}
-                    <div class="recipient">
+                    <div class="new-recipient">
                         <label for="recipient">To:</label>
                         <select id="recipient" name="recipient">
                             <option value="">______</option>
@@ -87,7 +85,7 @@
 
                     <!-- user list (recipient)-->
                     {% if request.user.is_staff %}
-                    <div class="recipient" action="">
+                    <div class="new-recipient" action="">
                         <label for="recipient">To:</label>
                         <select id="recipient" name="recipient">
                             <option value="">______</option>
@@ -99,10 +97,10 @@
                     {% endif %}
 
                     <!-- more form fields -->
-                    <div class="reason">
+                    <div class="new-reason">
                         <input type="text" name="reason" placeholder="Reason for appointment">
                     </div>
-                    <div class="info">
+                    <div class="new-info">
                         <div class="date">
                             <p class="info-date">
                                 <label for="date">Date:</label>
@@ -128,7 +126,7 @@
                     </div>
                     
                     <!-- Confirm or dismiss schedule -->
-                    <div class="actions">
+                    <div class="new-actions">
                         <button class="btn btn-primary" name="action" value="save" type="submit">Save</button>
                         <button class="btn btn-primary" name="action" value="dismiss" type="submit">Dismiss</button>
                     </div>

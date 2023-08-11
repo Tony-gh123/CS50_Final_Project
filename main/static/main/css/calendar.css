@@ -1,91 +1,96 @@
-
-body {
+.container {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
     font-family: Arial, sans-serif;
-    background-color: f4f4f4;
-    line-height: 1.6;
 }
 
-p.title {
+.title {
     font-size: 24px;
-    font-weight: bold;
-    text-align: center;
     margin-bottom: 20px;
-    color: #333;
-    border-bottom: 2px solid #333;
+    font-weight: bold;
+    border-bottom: 2px solid #ddd;
     padding-bottom: 10px;
 }
 
-.container {
-    width: 80%;
-    margin: auto;
-    overflow: hidden;
-}
-
 .calendar {
+    background-color: #f7f7f7;
     padding: 20px;
-    background-color: #fff;
-    color: #333;
-    margin: 20px 0;
     border-radius: 5px;
-    box-shadow: 2px 2px 15px 0px rgba(0, 0, 0, 0.1);
 }
 
-.calendar .appointments {
+.view-appointments, .past-appointments, .new-appointment {
     margin-bottom: 20px;
 }
 
-.calendar .appointment p {
-    margin: 5px 0;
-}
-
-.back {
-    padding: 20px;
-    border-top: 1px solid #ddd;
-}
-
-.back .recipient,
-.back .reason,
-.back .info,
-.back .actions {
-    margin: 10px 0;
-}
-
-.back label {
-    display: block;
-    margin-bottom: 5px;
-}
-
-.back input[type="text"],
-.back input[type="date"],
-.back input[type="time"],
-.back input[type="number"],
-.back select {
-    width: 100%;
+.view-list {
+    border: 1px solid #e0e0e0;
+    margin-top: 10px;
     padding: 10px;
-    border: 1px solid #ddd;
     border-radius: 5px;
 }
 
-.back .actions {
-    text-align: center;
+.view-appointment {
+    border-bottom: 1px dashed #ccc;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
 }
 
-.back .actions {
-    text-align: center;
+.view-appointment:last-child {
+    border-bottom: none;
 }
 
-.back button {
-    padding: 10px 20px;
-    margin: 5px;
+.btn {
+    padding: 10px 15px;
     border: none;
     border-radius: 5px;
-    color: #fff;
+    cursor: pointer;
+    margin-right: 5px;
 }
 
-.back button[name="action"][value="save"] {
+.btn-primary {
     background-color: #007BFF;
+    color: white;
 }
 
-.back button[name="action"][value="dimiss"] {
-    background-color: #dc3545;
+.new-appointment form, .past-appointments form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.new-recipient, .new-reason, .new-info, .new-actions {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.new-info .date, .new-info .duration, .new-info .comments {
+    display: flex;
+    gap: 10px;
+}
+
+.info-date, .info-time {
+    flex: 1;
+}
+
+input[type="text"], input[type="date"], input[type="time"], input[type="number"], select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049;
 }
