@@ -3,7 +3,7 @@
 
 {% block title %}PDF Helper | Admin chat{% endblock %}
 {% block more_css %}
-<link rel="stylesheet" type="text/css" href="{% static 'main/css/chat.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'main/css/admin_chat.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -33,12 +33,12 @@
                 <div>
                     <p> {{ message.content }} - {{ message.timestamp }} </p>
                     <p> {% if message.file %}</p>
-                    <form method="post" action="{% url 'add_file' message.id %}">
-                        {% csrf_token %}
-                        <a href="{{ message.file.url }}">{{ message.file }}</a>
-                        <button type="submit">Add File</button>
-                    </form>
-                    {% endif %}
+                        <form method="post" action="{% url 'add_file' message.id %}">
+                            {% csrf_token %}
+                            <a href="{{ message.file.url }}">{{ message.file }}</a>
+                            <button type="submit">Add File</button>
+                        </form>
+                        {% endif %}
                 </div>
             {% endfor %}
             <div>

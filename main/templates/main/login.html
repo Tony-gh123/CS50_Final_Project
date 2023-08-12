@@ -1,6 +1,10 @@
 {% extends 'main/land.html' %}
+{% load static %}
 
 {% block title %}PDF Helper | Login{% endblock %}
+{% block more_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'main/css/login.css' %}">
+{% endblock %}
 
 {% block content %}
     <h1>Welcome!</h1>
@@ -21,11 +25,4 @@
     <div class="container">
         <a class="btn btn-primary" href="/signup">Create New Account</a>
     </div>
-
-    <style>
-        h1, label {
-            color: white;
-        }
-    </style>
-    
 {% endblock %}

@@ -1,6 +1,10 @@
 {% extends 'main/land.html' %}
+{% load static %}
 
 {% block title %}PDF Helper | Sign-up{% endblock %}
+{% block more_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'main/css/signup.css' %}">
+{% endblock %}
 
 {% block content %}
 
@@ -27,11 +31,4 @@
 
         <button class="btn btn-primary" type="submit">Sign Up</button>
     </form>
-
-    <style>
-        h1, label {
-            color: white;
-        }
-    </style>
-    
 {% endblock %}

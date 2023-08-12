@@ -1,10 +1,15 @@
 {% extends 'main/land.html' %}
+{% load static %}
 
 {% block title %}PDF Helper | Home{% endblock %}
+{% block more_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'main/css/home.css' %}">
+{% endblock %}
 
 {% block content %}
-<h1>Connect!</h1>
-<h1>Grow Your Business!</h1>
-<h1>Expand!</h1>
-
+<div class="home-container">
+    <h1>Connect!</h1>
+    <h1>Grow Your Business!</h1>
+    <h1>Expand!</h1>
+</div>
 {% endblock %}

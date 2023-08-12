@@ -26,6 +26,7 @@ h1, h2, h3 {
 .col-md-8 {
     flex-basis: 70%;
     max-width: 70%;
+    margin-left: 20px; /* adding some space between the two columns */
 }
 
 ul {

@@ -2,8 +2,10 @@ html, body {
       height: 100%;
       margin: 0;
       padding: 0;
-}
-
+      font-family: 'Arial', sans-serif; /* Adjust to your preferred font. I added a generic one for consistency */
+  }
+  
 body {
-      background: linear-gradient(to bottom, #ffffff, #943838);
-}
+      background: linear-gradient(to bottom, #282c36, #3498db); /* Adjusted to the dark background and blue gradient from previous styles */
+      color: #eaeaea; /* Light text color for better visibility against the dark background */
+  }
