@@ -5,9 +5,33 @@ from main.views.file_upload import pdf_registry
 from django.contrib.auth.models import User
 from main.models import Appointment, AppointmentForm
 from django.db.models import Q
+from datetime import timedelta
+
 
 @login_required
 def calendar(request):
+
+    if request.user.is_staff:
+        user_appointments = Appointment.objects.filter(admin=request.user)
+    else:
+        user_appointments = Appointment.objects.filter(user=request.user)
+
+    if request.method == "POST":
+        action = request.POST.get('action')
+        if action == "cancel":
+                appointment_id = request.POST.get('appointment_id')
+                appointment = get_object_or_404(Appointment, id=appointment_id)
+                appointment.status = 'cancelled'
+                appointment.save()
+
+    context = {
+        'appointments': user_appointments
+    }
+
+    return render(request, 'main/calendar.html', context)
+
+@login_required
+def new_apt(request):
 
     # define users and admins.
     users = None
@@ -43,21 +67,14 @@ def calendar(request):
 
         elif action == "dismiss":
             form = AppointmentForm()
-        
-        elif action == "cancel":
-            appointment_id = request.POST.get('appointment_id')
-            appointment = get_object_or_404(Appointment, id=appointment_id)
-            appointment.status = 'cancelled'
-            appointment.save()
     
     context = {
         'form': form,
-        'appointments': user_appointments,
         'users': users,
         'admins': admins,
     }
     
-    return render(request, 'main/calendar.html', context)
+    return render(request, 'main/new_apt.html', context)
 
 @login_required
 def previous_apts(request):

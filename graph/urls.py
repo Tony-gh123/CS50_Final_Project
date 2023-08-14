@@ -6,7 +6,7 @@ from main.views.log import index, home
 from main.views.log import signup, login_user, logout_user
 from main.views.file_upload import pdf_registry
 from main.views.chat import admin_chat, chat, send, chat_delete, add_file
-from main.views.appointments import calendar, previous_apts
+from main.views.appointments import calendar, new_apt, previous_apts
 
 app_name = 'graph'
 
@@ -20,7 +20,7 @@ urlpatterns = [
     path('login/', login_user, name="login"),
     path('logout/', logout_user, name="logout"),
     # file uploads
-    path('user_profile/', pdf_registry, name='pdf_registry'),
+    path('file_upload/', pdf_registry, name='pdf_registry'),
     # user communication
     path('admin_chat/', admin_chat, name='admin_chat'),
     path('admin_chat/<int:recipient_id>/', admin_chat, name='admin_chat_user'),
@@ -30,6 +30,7 @@ urlpatterns = [
     path('add_file/<int:message_id>', add_file, name="add_file"),
     # calendar & appointments
     path('calendar/', calendar, name='calendar'),
+    path('new_apt/', new_apt, name='new_apt'),
     path('previous_apts/', previous_apts, name='previous_apts')
 ]
 

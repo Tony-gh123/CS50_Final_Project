@@ -1,4 +1,4 @@
-/* Adjusted structure without changing styles */
+/* General styles */
 body {
     font-family: 'Arial', sans-serif;
     background-color: #1e2129;
@@ -10,7 +10,7 @@ body {
 .container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; /* Center horizontally */
+    justify-content: center;
     margin-top: 100px;
     background-color: #282c36;
     padding: 40px;
@@ -21,20 +21,11 @@ body {
 }
 
 .title, h2 {
-    width: 100%; /* Full width for titles */
+    width: 100%;
     margin-bottom: 30px;
     font-weight: 600;
     border-bottom: 2px solid #3498db;
     padding-bottom: 10px;
-}
-
-.new-appointment-form {
-    flex: 1;
-    width: 100%; /* Full width for the form */
-    padding-right: 0;
-    border-right: none;
-    margin-right: 0;
-    margin-bottom: 20px; /* Add margin for spacing */
 }
 
 .appointments-list, .appointments-dropdown, .past-appointments {
@@ -48,7 +39,7 @@ body {
 }
 
 .appointment, details {
-    width: calc(33.33% - 10px); /* Equal width for appointments and details */
+    width: calc(33.33% - 10px);
     border: 1px solid #555;
     margin-bottom: 20px;
     padding: 15px;
@@ -79,7 +70,7 @@ body {
         margin-top: 50px;
     }
 
-    .new-appointment-form, .appointments-list, .appointments-dropdown, .past-appointments {
+    .appointments-list, .appointments-dropdown, .past-appointments {
         width: 100%;
         margin-right: 0;
     }
@@ -88,5 +79,23 @@ body {
         width: 100%;
     }
 }
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-primary {
+    background-color: #3498db;
+    color: #eaeaea;
+}
+
+.btn-primary:hover {
+    background-color: #2c7fb6;
+}
+
 
 

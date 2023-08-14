@@ -1,0 +1,75 @@
+/* New Appointment Form Styles */
+.new-appointment-form {
+    flex: 1;
+    width: 100%;
+    padding-right: 0;
+    border-right: none;
+    margin-right: 0;
+    margin-bottom: 20px;
+}
+
+.new-appointment-form .form-group, .new-appointment-form .form-group-inline {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.new-appointment-form .form-group-inline {
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.new-appointment-form .form-group-inline .form-group {
+    flex: 0 0 48%;
+    margin-bottom: 0;
+}
+
+.new-appointment-form label {
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.new-appointment-form select, .new-appointment-form input {
+    padding: 10px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    width: 100%;
+    background-color: #333;
+    color: #eaeaea;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+.new-appointment-form select:focus, .new-appointment-form input:focus {
+    border-color: #3498db;
+    background-color: #444;
+    outline: none;
+}
+
+.new-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.duration-buttons .duration-options {
+    display: flex;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.btn-duration {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #444;
+    color: #eaeaea;
+    transition: background-color 0.3s;
+}
+
+.btn-duration:hover {
+    background-color: #3498db;
+}
+
+.btn-duration.active {
+    background-color: #3498db;
+}

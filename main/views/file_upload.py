@@ -17,7 +17,7 @@ def pdf_registry(request): # Upload, Display and Delete pdf files!
 
         if request.method == 'POST':
             if 'pdf_upload' in request.FILES:
-                #get pdf file from user_profile.html
+                #get pdf file from file_upload.html
                 pdf_file = request.FILES.get('pdf_upload')
 
                 #Create a new UserUploads instance for the current user and upload file
@@ -32,14 +32,11 @@ def pdf_registry(request): # Upload, Display and Delete pdf files!
 
                 return redirect('pdf_registry')
 
-        return render(request, 'main/user_profile.html', {'user_pdfs': user_pdfs})
+        return render(request, 'main/file_upload.html', {'user_pdfs': user_pdfs})
 
     except UserUploads.DoesNotExist as e:
         logging.error(f"UserUploads.DoesNotExist: {e}")
         return render(request, 'main/home.html', {'error_message': "Error Occurred"})
-    
-    return render(request, 'main/user_profile.html')
-
 
 #Define a signal receiver to handle file deletion before the model is deleted
 @receiver(pre_delete, sender=UserUploads)

@@ -1,0 +1,77 @@
+{% extends 'main/land.html' %}
+{% load static %}
+
+{% block title %}PDF Helper | Appointments{% endblock %}
+{% block more_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'main/css/new_apt.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- schedule a new appointment -->
+<div class="container">
+    <h2 class="title"> New Appointment </h2>
+    <form class="new-appointment-form" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="recipient">To:</label>
+            <select id="recipient" name="recipient">
+                <option value="">Select Recipient</option>
+            <!-- admin list (recipient) -->
+                {% if not request.user.is_staff %}
+                    {% for admin in admins %}
+                    <option value="{{ admin.id }}">{{ admin.username }}</option>
+                    {% endfor %}
+                {% else %}
+            <!-- user list (recipient)-->
+                    {% for user in users %}
+                    <option value="{{ user.id }}">{{ user.username }}</option>
+                    {% endfor %}
+                    {% endif %}
+            </select>
+        </div>
+
+        <!-- more form fields -->
+        <div class="form-group">
+            <label for="reason">Reason:</label>
+            <input type="text" name="reason" placeholder="Reason for appointment">
+        </div>
+
+        <div class="form-group-inline">
+            <div class="form-group">
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date">
+            </div>
+            <div class="info-time">
+                <label for="time">Time:</label>
+                <input type="time" id="time" name="time">
+            </div>
+        </div>
+                        
+        <div class="form-group duration-buttons">
+            <label>Duration: </label>
+            <div class="duration-options">
+            <button class="btn-duration" type="button" data-duration="15:00">15min</button>
+            <button class="btn-duration" type="button" data-duration="30:00">30min</button>
+            <button class="btn-duration" type="button" data-duration="45:00">45min</button>
+            <button class="btn-duration" type="button" data-duration="60:00">More</button>
+            <input type="hidden" id="duration" name="duration">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="comments">Comments:</label>
+            <input type="text" id="comments" name="comments" placeholder="Example: Meet me inside">
+        </div>
+                    
+        <!-- Confirm or dismiss schedule -->
+        <div class="new-actions">
+            <button class="btn btn-primary" name="action" value="save" type="submit">Save</button>
+            <button class="btn btn-primary" name="action" value="dismiss" type="submit">Dismiss</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block more_js %}
+    <script src="{% static 'main/js/calendar.js' %}"></script>
+{% endblock %}
