@@ -10,6 +10,12 @@
 <!-- Previous Appointment -->
 <div class="container">
     <p> Previous Appointments </p>
+
+    <!-- Return to appointments -->
+    <div class="return-appointments">
+        <a class="btn btn-primary" href="{% url 'calendar' %}">Return</a>
+    </div>
+    
     <div class="calendar">
         {% if appointments %}
         <!-- view current appointments -->

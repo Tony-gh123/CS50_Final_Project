@@ -11,71 +11,79 @@
 <div class="container">
     <p class="title"> My Appointments </p>
     
-    {% if appointments %}
-    <!-- view current appointments -->
-    <div class="appointments-list">
-        {% for appointment in appointments %}
-        {% if appointment.status != 'cancelled' and appointment.status != 'completed' %}
-
-        {% if forloop.counter == 6 %}
-        <details>
-            <summary>More Appointments</summary>
-            <div class="appointments-dropdown">
-        {% endif %}
-
-        <div class="appointment">
-            <!-- Find Recipient -->
-            <p><strong>Recipient:</strong>
-            {% if user == appointment.admin %}
-                {{ appointment.user.username }}
-            {% else %} 
-                {{ appointment.admin.username }} 
+    <div class="appointments-wrapper">
+        {% if appointments %}
+        <!-- view current appointments -->
+        <div class="appointments-list">
+            {% for appointment in appointments %}
+            {% if appointment.status != 'cancelled' and appointment.status != 'completed' %}
+            
+            {% if forloop.counter == 3 %}
+                <details>
+                <summary>More Appointments</summary>
             {% endif %}
-            </p>
-            <!-- Rest of fields -->
-            <p><strong>Date:</strong> {{ appointment.date }}</p>
-            <p><strong>Time:</strong> {{ appointment.time }}</p>
-            <p><strong>Duration:</strong> {{ appointment.duration }}</p>
-            <p><strong>Reason:</strong> {{ appointment.reason }}</p>
-            <p><strong>Comments:</strong> {{ appointment.comments }}</p>
 
-                        <!-- Cancel Appointments -->
-            {% if appointment.status == 'scheduled' or appointment.status == 'completed' %}
-            <form method="post" action="{% url 'calendar' %}">
-                {% csrf_token %}
-                <input type="hidden" name="action" value="cancel">
-                <input type="hidden" name="appointment_id" value="{{ appointment.id }}">
-                <button type="submit">Cancel</button>
-            </form>
+            <div class="appointment">
+                <!-- Find Recipient -->
+                <p><strong>Recipient:</strong>
+                {% if user == appointment.admin %}
+                    {{ appointment.user.username }}
+                {% else %} 
+                    {{ appointment.admin.username }} 
+                {% endif %}
+                </p>
+                <!-- Rest of fields -->
+                <p><strong>Date:</strong> {{ appointment.date }}</p>
+                <p><strong>Time:</strong> {{ appointment.time }}</p>
+
+                <details>
+                    <p><strong>Duration:</strong> {{ appointment.duration }}</p>
+                    <p><strong>Reason:</strong> {{ appointment.reason }}</p>
+                    <p><strong>Comments:</strong> {{ appointment.comments }}</p>
+
+                                <!-- Cancel Appointments -->
+                    {% if appointment.status == 'scheduled' or appointment.status == 'completed' %}
+                    <form method="post" action="{% url 'calendar' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="cancel">
+                        <input type="hidden" name="appointment_id" value="{{ appointment.id }}">
+                        <button type="submit">Cancel</button>
+                    </form>
+                    {% endif %}
+                </details>
+            </div>
+            {% if forloop.counter > 2 and forloop.last %}
+                </details>
             {% endif %}
+
+            {% endif %}
+            {% endfor %}
         </div>
 
-        {% if forloop.counter > 6 and forloop.last %}
-            </div>
-        </details>
+        <!-- No Appointments -->
+        {% else %}
+            <p>No appointments scheduled</p>
         {% endif %}
- 
-        {% endif %}
-        {% endfor %}
 
-    <!-- No Appointments -->
-    {% else %}
-    <p>No appointments scheduled</p>
-    {% endif %}
-
-    <!-- view past appointments -->
-    {% if request.user.is_staff %}
-    <div class="past-appointments">
-        <form method ="post" action="{% url 'previous_apts' %}">
-            {% csrf_token %}
-            <button class="btn btn-primary" type="submit">All Apts</button>
-        </form>
     </div>
-    {% endif %}
 
-    <!-- Create new appointments -->
-    <div class="new-appointments">
-        <a class="btn btn-primary" href="{% url 'new_apt' %}">New Appointment</a>
+    <hr class="divider">
+
+    <div class="actions">
+        <!-- view past appointments -->
+        {% if request.user.is_staff %}
+        <div class="past-appointments">
+            <form method ="post" action="{% url 'previous_apts' %}">
+                {% csrf_token %}
+                <button class="btn btn-primary" type="submit">All Apts</button>
+            </form>
+        </div>
+        {% endif %}
+
+        <!-- Create new appointments -->
+        <div class="new-appointments">
+            <a class="btn btn-primary" href="{% url 'new_apt' %}">New Appointment</a>
+        </div>
     </div>
 </div>
 {% endblock %}

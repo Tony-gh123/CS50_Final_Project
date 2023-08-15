@@ -1,64 +1,83 @@
-.container {
-    max-width: 900px;
-    margin: 40px auto;
-    padding: 0 20px;
-    background-color: #f5f5f5;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+/* previous appointments styles */
+
+.container > p {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 60px; 
+    margin-bottom: 40px; 
+    text-align: center; 
+    color: #eaeaea; 
 }
 
-p {
-    font-weight: 500;
-    color: #555;
-    margin: 10px 0;
+.container > p:after {
+    content: "";
+    display: block;
+    margin: 20px auto 0 auto; 
+    width: 50%; 
+    height: 2px;
+    background-color: #3498db; 
 }
 
-.calendar {
-    padding: 20px 30px;
-    background-color: #ffffff;
-    border-radius: 10px;
+
+.return-appointments {
+    margin-bottom: 20px; 
+    text-align: left; 
+}
+
+.return-appointments a.btn {
+    display: inline-block; 
+}
+
+
+.appointments {
+    margin-top: 50px; /* Added space at the top for clarity */
 }
 
 .appointments .list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    gap: 30px; /* Space between appointments */
 }
 
 .appointment {
-    flex-basis: calc(33.333% - 20px); /* One third minus the total of the intended margin on both sides (10px + 10px) */
-    border: 1px solid #e0e0e0;
-    margin-bottom: 20px;
-    padding: 15px;
-    border-radius: 10px;
-    position: relative;
-    box-sizing: border-box; /* This ensures that the border and padding do not add up to the width */
+    width: calc(33.33% - 20px); /* Three appointments in a row with gap accounted for */
+    padding: 20px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background-color: #282c36;
+    transition: background-color 0.3s;
 }
 
-.appointment > p {
-    margin-bottom: 10px;
-    font-size: 14px;
-    line-height: 1.5;
+.appointment p {
+    margin-bottom: 10px; /* Space between appointment details */
+    color: #eaeaea; /* Light text color for better contrast */
+}
+
+.appointment p:first-child {
+    font-weight: 600; /* Highlight the status with bold text */
 }
 
 .actions {
-    position: absolute;
-    bottom: 15px;
-    right: 15px;
+    margin-top: 10px; /* Space between comments and the button */
 }
 
-button {
-    padding: 6px 12px;
-    font-weight: 600;
+.actions button {
+    padding: 10px;
     border: none;
     border-radius: 5px;
     background-color: #3498db;
-    color: #ffffff;
+    color: #eaeaea;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
-button:hover {
-    background-color: #2980b9;
+.actions button:hover {
+    background-color: #2c7fb6;
+}
+
+@media (max-width: 768px) {
+    .appointment {
+        width: 100%; /* Make appointment boxes stack on mobile */
+    }
 }
 
