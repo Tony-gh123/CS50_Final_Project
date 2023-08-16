@@ -11,61 +11,61 @@
 <div class="container">
     <p class="title"> My Appointments </p>
     
-    <div class="appointments-wrapper">
-        {% if appointments %}
-        <!-- view current appointments -->
-        <div class="appointments-list">
-            {% for appointment in appointments %}
-            {% if appointment.status != 'cancelled' and appointment.status != 'completed' %}
-            
-            {% if forloop.counter == 3 %}
-                <details>
-                <summary>More Appointments</summary>
-            {% endif %}
-
-            <div class="appointment">
-                <!-- Find Recipient -->
-                <p><strong>Recipient:</strong>
-                {% if user == appointment.admin %}
-                    {{ appointment.user.username }}
-                {% else %} 
-                    {{ appointment.admin.username }} 
+    {% if appointments %}
+    <!-- view current appointments -->
+    <form method="post" action="{% url 'calendar' %}">
+    {% csrf_token %}
+        <table class="appointments-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Duration</th>
+                    <th>Reason</th>
+                    <th>Comments</th>
+                    <th>Cancel</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appointment in appointments %}
+                {% if appointment.status != 'cancelled' and appointment.status != 'completed' %}
+                <tr>
+                    <td>
+                        {% if user == appointment.admin %}
+                            {{ appointment.user.username }}
+                        {% else %} 
+                            {{ appointment.admin.username }} 
+                        {% endif %}
+                    </td>
+                    <td>{{ appointment.date }}</td>
+                    <td>{{ appointment.time }}</td>
+                    <td>{{ appointment.duration }}</td>
+                    <td>{{ appointment.reason }}</td>
+                    <td>{{ appointment.comments }}</td>
+                    <td>
+                    <!-- Cancel Appointments -->
+                        {% if appointment.status == 'scheduled' %}
+                            <input type="checkbox" name="cancel" value="{{ appointment.id }}">
+                        {% endif %}
+                    </td>
+                </tr>
                 {% endif %}
-                </p>
-                <!-- Rest of fields -->
-                <p><strong>Date:</strong> {{ appointment.date }}</p>
-                <p><strong>Time:</strong> {{ appointment.time }}</p>
+                {% endfor %}
+            </tbody>
+        </table>
 
-                <details>
-                    <p><strong>Duration:</strong> {{ appointment.duration }}</p>
-                    <p><strong>Reason:</strong> {{ appointment.reason }}</p>
-                    <p><strong>Comments:</strong> {{ appointment.comments }}</p>
-
-                                <!-- Cancel Appointments -->
-                    {% if appointment.status == 'scheduled' or appointment.status == 'completed' %}
-                    <form method="post" action="{% url 'calendar' %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="action" value="cancel">
-                        <input type="hidden" name="appointment_id" value="{{ appointment.id }}">
-                        <button type="submit">Cancel</button>
-                    </form>
-                    {% endif %}
-                </details>
-            </div>
-            {% if forloop.counter > 2 and forloop.last %}
-                </details>
-            {% endif %}
-
-            {% endif %}
-            {% endfor %}
+        <!-- Submit Changes -->
+        <div class="submit-changes">
+            <button type="submit">Submit</button>
         </div>
 
-        <!-- No Appointments -->
-        {% else %}
-            <p>No appointments scheduled</p>
-        {% endif %}
+    </form>
 
-    </div>
+    <!-- No Appointments -->
+    {% else %}
+        <p>No appointments scheduled</p>
+    {% endif %}
 
     <hr class="divider">
 

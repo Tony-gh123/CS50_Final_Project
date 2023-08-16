@@ -19,38 +19,57 @@
     <div class="calendar">
         {% if appointments %}
         <!-- view current appointments -->
-        <div class="appointments">
-            <div class="list">
-                {% for appointment in appointments %}
-                <div class="appointment">
-                    <p>Status: {{ appointment.status }}</p>
-                    <p>Recipient: 
-                    {% if user == appointment.admin %}
-                        {{ appointment.user.username }}
-                    {% else %} 
-                        {{ appointment.admin.username }} 
-                    {% endif %}
-                    </p>
-                    <p>Date: {{ appointment.date }}</p>
-                    <p>Time: {{ appointment.time }}</p>
-                    <p>Duration: {{ appointment.duration }}</p>
-                    <p>Reason: {{ appointment.reason }}</p>
-                    <p>Comments: {{ appointment.comments }}</p>
-                    <!-- Restore Appointments -->
-                    <div actions="action">
-                        <form method="post" action="{% url 'previous_apts' %}">
-                            {% csrf_token %}
-                            <input type="hidden" name="action" value="restore">
-                            <input type="hidden" name="restore" value="{{ appointment.id }}">
-                            <button type="submit">Reschedule</button>
-                        </form>
-                    </div>
-                </div>
-                {% endfor %}
+        <form method="post" action="{% url 'previous_apts' %}">
+        {% csrf_token %}
+            <table class="appointments-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Duration</th>
+                        <th>Reason</th>
+                        <th>Comments</th>
+                        <th>Restore</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for appointment in appointments %}
+                    <tr>
+                        <td>
+                            {% if user == appointment.admin %}
+                                {{ appointment.user.username }}
+                            {% else %} 
+                                {{ appointment.admin.username }} 
+                            {% endif %}
+                        </td>
+                        <td>{{ appointment.date }}</td>
+                        <td>{{ appointment.time }}</td>
+                        <td>{{ appointment.duration }}</td>
+                        <td>{{ appointment.reason }}</td>
+                        <td>{{ appointment.comments }}</td>
+                        <td>
+                        <!-- Restore Appointments -->
+                            {% if appointment.status == 'cancelled' or appointment.status == 'completed' %}
+                                <input type="checkbox" name="restore" value="{{ appointment.id }}">
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <!-- Submit Changes -->
+            <div class="submit-changes">
+                <button type="submit">Submit</button>
             </div>
-        </div>
-        </div>
+
+        </form>
+        <!-- No Appointments -->
+        {% else %}
+            <p>No appointments scheduled</p>
         {% endif %}
+
     </div>
 </div>
 {% endblock %}
