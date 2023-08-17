@@ -2,16 +2,17 @@
 {% load static %}
  
 {% block title %}PDF Helper | FILE Upload{% endblock %}
+
 {% block more_css %}
 <link rel="stylesheet" type="text/css" href="{% static 'main/css/file_upload.css' %}">
 {% endblock %}
 
-
 {% if user.isauthenticated %}
-    {% block content %}
+{% block content %}
+<div class="pdf-container">
     <div class="pdf">
         <!-- Upload PDFs -->
-        <h1>PDF | Upload</h1>
+        <h1>Upload New File:</h1>
         <form method="post" action="{% url 'pdf_registry' %}" enctype="multipart/form-data"> 
             {% csrf_token %}
             <input type="file" name="pdf_upload">
@@ -22,24 +23,34 @@
         <h2> PDFs on File: </h2>
         <form method="post">
             {% csrf_token %}
-            <ul>
-                {% for user_pdf in user_pdfs %}
-                    <li>
-                        <input type="checkbox" name="pdf_delete" value="{{ user_pdf.id}}">
-                        <a href="{{ user_pdf.pdf_file.url }}">{{user_pdf.pdf_file.name}}</a>
-                    </li>
-                {% empty %}
-                    <p>No PDF file uploaded yet</p>
-                {% endfor %}
-            </ul>
-            <button type="submit">Delete Selected PDFs</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>File Name</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user_pdf in user_pdfs %}
+                        <tr>
+                            <td>
+                                <a href="{{ user_pdf.pdf_file.url }}">{{user_pdf.pdf_file.name}}</a>
+                            </td>
+                            <td>
+                                <input type="checkbox" name="pdf_delete" value="{{ user_pdf.id}}">
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <td colspan="2">No PDF files uploaded yet</td>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button type="submit">Save</button>
         </form>
     </div>
-
-        {% endblock %}
-
+</div>
+{% endblock %}
 {% else %}
     <p>Please log in to use PDF | Helper</p>
-
 {% endif %}
 
