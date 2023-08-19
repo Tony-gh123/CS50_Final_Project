@@ -1,0 +1,87 @@
+/* Set the height of the sidebar to fill the viewport */
+.sidebar {
+    height: 100vh;
+    width: 155px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Position the logout button at the bottom of the sidebar */
+.sidebar .logout {
+    margin-top: auto;
+}
+
+.sidebar .login {
+    margin-top: auto;
+}
+
+/* Style the navbar items */
+.nav-item {
+    list-style: none;
+}
+
+.nav-link {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding-left: 0.1rem;
+}
+
+.nav-link:hover {
+    color: #ddd;
+}
+
+.mmp-logo {
+    font-family: 'Dancing Script', cursive;
+    font-weight: 340; 
+    font-size: 1.8rem; 
+    color: #2f96f5;  /* Dark gray color */
+    text-shadow: 2px 2px 3px rgba(208, 79, 255, 0.1);  /* Subtle shadow for depth */
+    letter-spacing: 0.5px;  /* Slight spacing for clarity */
+    margin: 0;  /* Reset any default margins */
+    padding: 10px 0;  /* Some vertical padding for spacing */
+    transition: color 0.3s ease;  /* Smooth transition for hover effect */
+}
+
+.mmp-logo:hover {
+    color: #2a6aa2;  /* Slight color change on hover, for example, a blue color. Adjust as per branding */
+}
+
+/* Style the content area */
+.flex-grow-1 {
+    flex-grow: 1;
+}
+
+.sidebar-retracted h3 {
+    font-family: 'Dancing Script', cursive;
+    font-weight: 100; 
+    font-size: 1.2rem; 
+    color: #2f96f5;  /* Dark gray color */
+    text-shadow: 2px 2px 3px rgba(208, 79, 255, 0.1);  /* Subtle shadow for depth */
+    letter-spacing: 0.5px;  /* Slight spacing for clarity */
+    margin: 0;  /* Reset any default margins */
+    padding: 10px 0;  /* Some vertical padding for spacing */
+    transition: color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.sidebar-retracted {
+    width: 70px; /* Adjust this value based on the size of your icons and desired padding */
+    overflow-x: hidden;
+}
+
+.sidebar-retracted .nav-label {
+    display: none; /* This will hide text next to the icons */
+}
+
+/* You might also want to center the icons in the retracted mode */
+.sidebar-retracted .nav-link {
+    justify-content: center;
+    text-align: center;
+}
+
+
+
+
+
+
+

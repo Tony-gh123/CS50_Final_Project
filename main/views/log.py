@@ -9,7 +9,6 @@ from main.views.file_upload import pdf_registry
 from django.db import models
 from main.models import UserUploads, Chat
 from django.http import HttpResponse
-from pdfminer.high_level import extract_text
 import logging
 import os
 
