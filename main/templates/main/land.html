@@ -1,118 +1,142 @@
 {% load static %}
 <!DOCTYPE html>
+    <!-- The purpose of my project is to work on back-end (python - postgresql, etc) I borrowed HTML AND CSS free Templates from online -->
 <html>
-<head>
-    <!-- Bootstrap Set-up-->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Bootstrap link -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    
-    <!-- Title / Style sheet -->
-    <title>{% block title %}MMP{% endblock %}</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="{% static 'favicon.ico' %}">
 
+<head>
+    <!-- Set Up -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <!-- StyleSheet-->
     <link rel="stylesheet" type="text/css" href="{% static 'main/css/land.css' %}">
     
+    <!----===== Boxicons CSS ===== -->
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+
+    <title>{% block title %}CDS{% endblock %}</title>
+    
     <!-- Child CSS styles -->
     {% block more_css %}{% endblock %}
-
 </head>
+
 <body>
-<div class="d-flex flex-row">
-    <div class="bg-dark p-3 sidebar col-3" id="sidebar" style="height: 100vh;">
-        <!-- The button to toggle the sidebar state -->
-        <button id="sidebarToggler" class="navbar-toggler" type="button">
-            <span class="navbar-toggler-icon"></span>
-        </button>                      
-        <ul class="navbar-nav">
-            <h3 class="mmp-logo">MMP</h3>
-            <!-- Home Item -->
-            <li class="nav-item">
-                <a class="nav-link text-white" href="/home">
-                    <i class="bi bi-house-door"></i>  <!-- Home Icon (Replace with suitable icon) -->
-                    <span class="nav-label">Home</span>
-                </a>
-            </li>
-            
-            {% if user.is_authenticated %}
-            <!-- My Projects Item -->
-            <li class="nav-item">
-                <a class="nav-link text-white" href="/file_upload">
-                    <i class="bi bi-folder"></i>  <!-- Projects Icon (Replace with suitable icon) -->
-                    <span class="nav-label">My Projects</span>
-                </a>
-            </li>
-    
-            <!-- Appointments Item -->
-            <li class="nav-item">
-                <a class="nav-link text-white" href="/calendar">
-                    <i class="bi bi-calendar"></i>  <!-- Calendar Icon (Replace with suitable icon) -->
-                    <span class="nav-label">Appointments</span>
-                </a>
-            </li>
-    
-            <!-- Chat Item -->
-            <li class="nav-item">
-                {% if user.is_staff %}
-                    <a class="nav-link text-white" href="/admin_chat">
-                        <i class="bi bi-chat-dots"></i>  <!-- Chat Icon (Replace with suitable icon) -->
-                        <span class="nav-label">Admin Chat</span>
-                    </a>
-                {% else %}
-                    <a class="nav-link text-white" href="/chat">
-                        <i class="bi bi-chat-dots"></i>  <!-- Chat Icon (Replace with suitable icon) -->
-                        <span class="nav-label">Chat</span>
-                    </a>
-                {% endif %}
-            </li>
-        </ul>
-    
-        <!-- Logout should be in a drop down!!!-->
-        <ul class="navbar-nav mt-auto mb-2">
-            <!-- Logout -->
-            <li class="nav-item">
-                <a class="nav-link text-white" href="/logout">
-                    <i class="bi bi-box-arrow-right"></i>  <!-- Logout Icon (Replace with suitable icon) -->
-                    <span class="nav-label">Logout</span>
-                </a>
-            </li>
-        </ul>
+<div class="main-container">
+    <nav class="sidebar close">
+        <header>
+            <div class="image-text">
+                <span class="image">
+                    <img src="{% static 'main/logo.png' %}" alt="CMS Logo">
+                </span>
+                <div class="text logo-text">
+                    <span class="name">CMS</span>
+                    <span class="profession">Management</span>
+                </div>
+            </div>
+            <i class='bx bx-chevron-right toggle'></i>
+        </header>
+        <div class="menu-bar">
+            <div class="menu">
+                <li class="search-box">
+                    <i class='bx bx-search icon'></i>
+                    <input type="text" placeholder="Search...">
+                </li>
+                <ul class="menu-links">
+                    {% if not user.is_authenticated %}
+                    <li class="nav-link">
+                        <a href="/home">
+                            <i class='bx bx-home-alt icon' ></i>
+                            <span class="text nav-text">Home</span>
+                        </a>
+                    </li>
 
-        {% else %}
-        <ul class="navbar-nav mt-auto mb-2">
-            <!-- Logout -->
-            <li class="nav-item">
-                <a class="nav-link text-white" href="/login">
-                    <i class="bi bi-box-arrow-right"></i>  <!-- Logout Icon (Replace with suitable icon) -->
-                    <span class="nav-label">Login</span>
-                </a>
-            </li>
-        </ul>
-        {% endif %}   
-    </div>
+                    <!-- Require user to log in-->
+                    <div class="bottom-content">
+                        <li class="">
+                            <a href="/login">
+                                <i class='bx bx-log-out icon' ></i>
+                                <span class="text nav-text">Login</span>
+                            </a>
+                        </li>   
+                    </div>
 
-    <!-- Content Area -->
-    <div class="flex-grow-1 cold-9">
+                    <!-- Check if user has logged-in -->
+                    {% else %}
+                    <li class="nav-link">
+                        <a href="/home">
+                            <i class='bx bx-home-alt icon' ></i>
+                            <span class="text nav-text">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="/file_upload">
+                            <i class='bx bx-bar-chart-alt-2 icon' ></i>
+                            <span class="text nav-text">My Projects</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="/calendar">
+                            <i class='bx bx-bell icon'></i>
+                            <span class="text nav-text">Appointments</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="#">
+                            <i class='bx bx-pie-chart-alt icon' ></i>
+                            <span class="text nav-text">Analytics</span>
+                        </a>
+                    </li>
+                    {% if user.is_staff %}
+                    <li class="nav-link">
+                        <a href="/admin_chat">
+                            <i class='bx bx-heart icon' ></i>
+                            <span class="text nav-text">Admin Chat</span>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="nav-link">
+                        <a href="/chat">
+                            <i class='bx bx-wallet icon' ></i>
+                            <span class="text nav-text">Chat</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="bottom-content">
+                <li class="">
+                    <a href="/logout">
+                        <i class='bx bx-log-out icon' ></i>
+                        <span class="text nav-text">Logout</span>
+                    </a>
+                </li>
+                <li class="mode">
+                    <div class="sun-moon">
+                        <i class='bx bx-moon icon moon'></i>
+                        <i class='bx bx-sun icon sun'></i>
+                    </div>
+                    <span class="mode-text text">Dark mode</span>
+                    <div class="toggle-switch">
+                        <span class="switch"></span>
+                    </div>
+                </li>
+            </div>
+            {% endif %}
+        </div>
+    </nav>
+    
+    <section class="content_container">
         {% block content %}{% endblock %}
-    </div>
+    </section>
 
-    </div>
 </div>
-
-    <!-- Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
     <!-- JS Script -->
     <script src="{% static 'main/js/land.js' %}"></script>
 
     <!--Child Javascript-->
     {% block more_js %}{% endblock %}
-    
+
 </body>
 </html>
