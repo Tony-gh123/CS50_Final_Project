@@ -1,142 +1,85 @@
 {% load static %}
 <!DOCTYPE html>
-    <!-- The purpose of my project is to work on back-end (python - postgresql, etc) I borrowed HTML AND CSS free Templates from online -->
 <html>
-
 <head>
     <!-- Set Up -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <!-- StyleSheet-->
     <link rel="stylesheet" type="text/css" href="{% static 'main/css/land.css' %}">
-    
-    <!----===== Boxicons CSS ===== -->
-    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- Bootstrap5 Link -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+
 
     <title>{% block title %}CDS{% endblock %}</title>
     
     <!-- Child CSS styles -->
     {% block more_css %}{% endblock %}
+    
 </head>
-
 <body>
-<div class="main-container">
-    <nav class="sidebar close">
-        <header>
-            <div class="image-text">
-                <span class="image">
-                    <img src="{% static 'main/logo.png' %}" alt="CMS Logo">
-                </span>
-                <div class="text logo-text">
-                    <span class="name">CMS</span>
-                    <span class="profession">Management</span>
-                </div>
-            </div>
-            <i class='bx bx-chevron-right toggle'></i>
-        </header>
-        <div class="menu-bar">
-            <div class="menu">
-                <li class="search-box">
-                    <i class='bx bx-search icon'></i>
-                    <input type="text" placeholder="Search...">
-                </li>
-                <ul class="menu-links">
-                    {% if not user.is_authenticated %}
-                    <li class="nav-link">
-                        <a href="/home">
-                            <i class='bx bx-home-alt icon' ></i>
-                            <span class="text nav-text">Home</span>
-                        </a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="/home/">CMS</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">  <!-- Default alignment to the left -->
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/home/">Home</a>
                     </li>
-
-                    <!-- Require user to log in-->
-                    <div class="bottom-content">
-                        <li class="">
-                            <a href="/login">
-                                <i class='bx bx-log-out icon' ></i>
-                                <span class="text nav-text">Login</span>
-                            </a>
-                        </li>   
-                    </div>
-
-                    <!-- Check if user has logged-in -->
-                    {% else %}
-                    <li class="nav-link">
-                        <a href="/home">
-                            <i class='bx bx-home-alt icon' ></i>
-                            <span class="text nav-text">Dashboard</span>
-                        </a>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/chat/">Chat</a>
                     </li>
-                    <li class="nav-link">
-                        <a href="/file_upload">
-                            <i class='bx bx-bar-chart-alt-2 icon' ></i>
-                            <span class="text nav-text">My Projects</span>
-                        </a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/file_upload/">My Projects</a>
                     </li>
-                    <li class="nav-link">
-                        <a href="/calendar">
-                            <i class='bx bx-bell icon'></i>
-                            <span class="text nav-text">Appointments</span>
-                        </a>
-                    </li>
-                    <li class="nav-link">
-                        <a href="#">
-                            <i class='bx bx-pie-chart-alt icon' ></i>
-                            <span class="text nav-text">Analytics</span>
-                        </a>
-                    </li>
-                    {% if user.is_staff %}
-                    <li class="nav-link">
-                        <a href="/admin_chat">
-                            <i class='bx bx-heart icon' ></i>
-                            <span class="text nav-text">Admin Chat</span>
-                        </a>
-                    </li>
-                    {% else %}
-                    <li class="nav-link">
-                        <a href="/chat">
-                            <i class='bx bx-wallet icon' ></i>
-                            <span class="text nav-text">Chat</span>
-                        </a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/calendar/">Appointments</a>
                     </li>
                     {% endif %}
                 </ul>
+                
+                <!-- Right aligned nav items for authentication -->
+                <ul class="navbar-nav ms-auto">  <!-- Align to the right -->
+                    {% if user.is_authenticated %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Profile
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                                <li><a class="dropdown-item" href="#">View Profile</a></li>
+                                <li><a class="dropdown-item" href="#">Settings</a></li>
+                                <li><a class="dropdown-item" href="/logout/">Logout</a></li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login/">Sign-in</a>
+                        </li>
+                    {% endif %}
+                </ul>
             </div>
-            <div class="bottom-content">
-                <li class="">
-                    <a href="/logout">
-                        <i class='bx bx-log-out icon' ></i>
-                        <span class="text nav-text">Logout</span>
-                    </a>
-                </li>
-                <li class="mode">
-                    <div class="sun-moon">
-                        <i class='bx bx-moon icon moon'></i>
-                        <i class='bx bx-sun icon sun'></i>
-                    </div>
-                    <span class="mode-text text">Dark mode</span>
-                    <div class="toggle-switch">
-                        <span class="switch"></span>
-                    </div>
-                </li>
-            </div>
-            {% endif %}
         </div>
     </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        {% block content %}
+        {% endblock %}
+    </div>
     
-    <section class="content_container">
-        {% block content %}{% endblock %}
-    </section>
-
-</div>
-
-    <!-- JS Script -->
-    <script src="{% static 'main/js/land.js' %}"></script>
-
-    <!--Child Javascript-->
+    <!-- Include Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
+    <!-- Child Javascript -->
     {% block more_js %}{% endblock %}
-
+    
 </body>
 </html>

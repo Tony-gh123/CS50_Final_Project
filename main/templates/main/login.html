@@ -7,22 +7,52 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Welcome!</h1>
-    <form action="/login/" method="POST">
+<div class="container">
+    <div class="row m-5 no-gutters shadow-lg">
+        <div class="col-md-6 bg-white p-5">
+            <h3 class="pb-3">Login</h3>
+            <div class="form-style">
+                <form action="/login/" method="POST">
 
-        {% csrf_token %}
-        <label form="">Username</label>
-        <input type="text" id="username" name="username" placeholder="username" Required>
-        <br>
+                    {% csrf_token %}
 
-        <label form="">Password</label>
-        <input type="password" id="password" name="password" placeholder="Password" Required>
-        <br>
+                    <div class="form-group pb-3">
+                        <input type="text" name="username" placeholder="Username" class="form-control" id="username" required>
+                    </div>
+                    <div class="form-group pb-3">
+                        <input type="password" name="password" placeholder="Password" class="form-control" id="password" required>
+                    </div>
 
-        <button class="btn btn-primary" type="submit">Login</button>
-    </form>
+                    <!-- This is a Remember Me Checkbox -->
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <div>
+                                <input type="checkbox" name="remember_me" value="1" id="remember_me">
+                            </div>
+                            <label for="remember_me" class="pl-2 small-text">Remember Me</label>
+                        </div>
+                        <div><a href="#">Forgot Password?</a></div>
+                    </div>                    
 
-    <div class="container">
-        <a class="btn btn-primary" href="/signup">Create New Account</a>
+                    <div class="pb-2">
+                        <button type="submit" class="btn btn-dark w-100 font-weight-bold mt-2">Login</button>
+                    </div>
+                </form>
+
+                <!-- Implement here log-in with google -->
+
+                <div class="pt-4 text-center">
+                    Not registered? <a href="/signup">Sign Up</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Logo Image -->
+        <div class="col-md-6 d-none d-md-block">
+            <img src="" class="img-fluid" style="min-height:100%;" alt="CMS BITCHES!" />
+        </div>
+        
     </div>
+</div>
+
 {% endblock %}

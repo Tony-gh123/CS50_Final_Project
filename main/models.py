@@ -4,7 +4,6 @@ from django import forms
 
 # Create your models here.
 
-
 class UserUploads(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)

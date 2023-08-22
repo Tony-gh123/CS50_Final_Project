@@ -1,0 +1,68 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f6;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+}
+
+.shadow-lg {
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+}
+
+h3 {
+    color: #333;
+    font-weight: 700;
+}
+
+.form-style {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.form-control {
+    border-radius: 0;
+    border: 1px solid #ddd;
+    transition: border-color 0.3s;
+}
+
+.form-control:focus {
+    border-color: #5a5959;
+    box-shadow: none;
+}
+
+.btn-dark {
+    background-color: #3f4664;
+    border-radius: 0;
+    border: none;
+    transition: background-color 0.3s;
+}
+
+.btn-dark:hover {
+    background-color: #555;
+}
+
+a {
+    color: #555;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #333;
+    text-decoration: none;
+}
+
+.font-weight-bold {
+    font-weight: 600;
+}
+
+.small-text {
+    font-size: 0.90rem;  /* making the text smaller */
+}
+
+
+input[type="checkbox"] {
+    margin-right: 5px; /* adds space between the checkbox and the label */
+}

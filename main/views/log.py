@@ -1,19 +1,10 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.decorators import login_required
-from django.db.models.signals import pre_delete
-from django.dispatch import receiver
-from main.views.file_upload import pdf_registry
-from django.db import models
-from main.models import UserUploads, Chat
-from django.http import HttpResponse
-import logging
-import os
+from main.models import UserUploads
 
-
-# Create your views here.
+# Authentication
 
 def index(request):
     return render(request, 'main/land.html')
