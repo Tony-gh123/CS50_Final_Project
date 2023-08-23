@@ -64,5 +64,5 @@ a:hover {
 
 
 input[type="checkbox"] {
-    margin-right: 5px; /* adds space between the checkbox and the label */
+    margin-right: 10px; /* adds space between the checkbox and the label */
 }
