@@ -70,6 +70,12 @@
     <hr class="divider">
 
     <div class="actions">
+
+        <!-- Create new appointments -->
+        <div class="new-appointments">
+            <a class="btn btn-primary" href="{% url 'new_apt' %}">New Appointment</a>
+        </div>
+
         <!-- view past appointments -->
         {% if request.user.is_staff %}
         <div class="past-appointments">
@@ -79,11 +85,7 @@
             </form>
         </div>
         {% endif %}
-
-        <!-- Create new appointments -->
-        <div class="new-appointments">
-            <a class="btn btn-primary" href="{% url 'new_apt' %}">New Appointment</a>
-        </div>
+        
     </div>
 </div>
 {% endblock %}

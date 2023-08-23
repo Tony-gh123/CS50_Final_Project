@@ -79,6 +79,7 @@ def new_apt(request):
                     appointment.user = request.user
                     appointment.admin = recipient
                 appointment.save()
+                return redirect('calendar')
             else:
                 print("Invalid Form")
                 print("Form Errors:", form.errors)

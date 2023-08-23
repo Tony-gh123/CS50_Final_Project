@@ -1,0 +1,97 @@
+
+.title {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.new-appointment-form {
+    width: 100%;
+}
+
+.form-group,
+.form-group-inline {
+    margin-bottom: 20px;
+}
+
+.form-group-inline {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-group label,
+.form-group-inline label {
+    display: block;
+    margin-bottom: 10px;
+    color: #555;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="time"],
+select {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #555;
+}
+
+.info-time {
+    width: 48%;  /* Adjust according to your preference */
+}
+
+.duration-buttons label {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.duration-options {
+    display: inline-flex;
+    gap: 10px;
+}
+
+.btn-duration {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    background-color: #3f4c5a;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-duration:hover {
+    background-color: #94c8ff;
+}
+
+.new-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn.btn-primary {
+    background-color: #39434d;
+    color: #fff;
+}
+
+.btn.btn-primary:hover {
+    background-color: #5f85ae;
+}
+
+.btn-duration.selected {
+    background-color: #94c8ff;
+}
+
