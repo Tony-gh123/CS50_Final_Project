@@ -1,20 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.contrib import messages
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from django.db.models.signals import pre_delete
-from django.dispatch import receiver
 from django.db import models
-from main.views.file_upload import pdf_registry
 from main.models import UserUploads, Chat
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.db.models import Q
 from django.utils import timezone
-import logging
-import os
 
 
 @login_required
